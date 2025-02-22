@@ -4,7 +4,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Tooltip from "@material-ui/core/Tooltip";
 import CloseIcon from "@material-ui/icons/Close";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { useTranslation } from "react-i18next";
 
 interface SelectToolbarProps {
   onCancel: () => void;
@@ -19,20 +18,18 @@ const SelectToolbar = ({
   processing,
   selected,
 }: SelectToolbarProps) => {
-  const { t } = useTranslation();
-
   const numSelected = selected.length;
 
   return (
     <Toolbar sx={{ ml: 1, px: { xs: 3, sm: 6 } }}>
       <Fab color="secondary" onClick={onCancel} variant="extended">
         <CloseIcon sx={{ mr: 1 }} />
-        {numSelected} {t("common.selected")}
+        {numSelected} 개 선택됨
       </Fab>
       <Box sx={{ flexGrow: 1 }} />
 
       {numSelected > 0 && (
-        <Tooltip title={t("common.delete") as string}>
+        <Tooltip title="삭제">
           <Fab
             color="secondary"
             disabled={processing}

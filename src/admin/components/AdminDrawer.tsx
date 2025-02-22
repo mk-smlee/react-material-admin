@@ -5,15 +5,11 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
-import AccountTreeIcon from "@material-ui/icons/AccountTree";
-import BarChartIcon from "@material-ui/icons/BarChart";
-import EventIcon from "@material-ui/icons/Event";
-import HelpCenterIcon from "@material-ui/icons/HelpCenter";
-import HomeIcon from "@material-ui/icons/Home";
+import CreditCard from "@material-ui/icons/CreditCard";
 import PeopleIcon from "@material-ui/icons/People";
 import PersonIcon from "@material-ui/icons/Person";
-import SettingsIcon from "@material-ui/icons/Settings";
-import { useTranslation } from "react-i18next";
+import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos";
+import ArrowBackIosNew from "@material-ui/icons/ArrowBackIosNew";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../auth/contexts/AuthProvider";
 import Logo from "../../core/components/Logo";
@@ -21,53 +17,31 @@ import { drawerCollapsedWidth, drawerWidth } from "../../core/config/layout";
 
 type AdminDrawerProps = {
   collapsed: boolean;
+  changeCollapsed: (collapsed: boolean) => void;
   mobileOpen: boolean;
   onDrawerToggle: () => void;
-  onSettingsToggle: () => void;
 };
 
 export const menuItems = [
   {
-    icon: HomeIcon,
-    key: "admin.drawer.menu.home",
+    icon: CreditCard,
+    label: "PG사 관리",
     path: "/admin",
   },
   {
-    icon: BarChartIcon,
-    key: "admin.drawer.menu.dashboard",
-    path: "/admin/dashboard",
-  },
-  {
     icon: PeopleIcon,
-    key: "admin.drawer.menu.userManagement",
+    label: "사용자 관리",
     path: "/admin/user-management",
-  },
-  {
-    icon: EventIcon,
-    key: "admin.drawer.menu.calendar",
-    path: "/admin/calendar",
-  },
-  {
-    icon: AccountTreeIcon,
-    key: "admin.drawer.menu.projects",
-    path: "/admin/projects",
-  },
-  {
-    icon: HelpCenterIcon,
-    key: "admin.drawer.menu.help",
-    path: "/admin/help",
   },
 ];
 
 const AdminDrawer = ({
   collapsed,
+  changeCollapsed,
   mobileOpen,
   onDrawerToggle,
-  onSettingsToggle,
 }: AdminDrawerProps) => {
   const { userInfo } = useAuth();
-  const { t } = useTranslation();
-
   const width = collapsed ? drawerCollapsedWidth : drawerWidth;
 
   const drawer = (
@@ -81,7 +55,7 @@ const AdminDrawer = ({
             key={item.path}
             activeClassName="Mui-selected"
             end={true}
-            to={`/${process.env.PUBLIC_URL}${item.path}`}
+            to={`/${item.path}`}
           >
             <ListItemAvatar>
               <Avatar sx={{ color: "inherit", bgcolor: "transparent" }}>
@@ -89,7 +63,7 @@ const AdminDrawer = ({
               </Avatar>
             </ListItemAvatar>
             <ListItemText
-              primary={t(item.key)}
+              primary={item.label}
               sx={{
                 display: collapsed ? "none" : "block",
               }}
@@ -99,11 +73,14 @@ const AdminDrawer = ({
       </List>
       <Box sx={{ flexGrow: 1 }} />
       <List component="nav" sx={{ p: 2 }}>
-        <ListItem
-          button
-          component={NavLink}
-          to={`/${process.env.PUBLIC_URL}/admin/profile`}
-        >
+      <ListItem button onClick={() => changeCollapsed(!collapsed)}>
+          <ListItemAvatar>
+            <Avatar>
+              { collapsed ? <ArrowForwardIos /> : <ArrowBackIosNew /> } 
+            </Avatar>
+          </ListItemAvatar>
+        </ListItem>
+        <ListItem button component={NavLink} to={`/admin/profile`}>
           <ListItemAvatar>
             <Avatar>
               <PersonIcon />
@@ -118,39 +95,25 @@ const AdminDrawer = ({
             />
           )}
         </ListItem>
-        <ListItem button onClick={onSettingsToggle}>
-          <ListItemAvatar>
-            <Avatar>
-              <SettingsIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary={t("admin.drawer.menu.settings")}
-            sx={{
-              display: collapsed ? "none" : "block",
-            }}
-          />
-        </ListItem>
       </List>
     </Box>
   );
 
   return (
     <Box
-      aria-label="Admin drawer"
+      aria-label="관리자 메뉴"
       component="nav"
       sx={{
         width: { lg: width },
         flexShrink: { lg: 0 },
       }}
     >
-      {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
       <Drawer
         variant="temporary"
         open={mobileOpen}
         onClose={onDrawerToggle}
         ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
+          keepMounted: true, // 모바일에서 더 나은 성능을 위해 유지
         }}
         sx={{
           display: { xs: "block", lg: "none" },

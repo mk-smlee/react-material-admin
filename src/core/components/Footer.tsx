@@ -11,7 +11,7 @@ const Footer = () => {
         <Link
           color="inherit"
           component={RouterLink}
-          to={`/${process.env.PUBLIC_URL}/`}
+          to="/"
         >
           {process.env.REACT_APP_NAME}
         </Link>{" "}

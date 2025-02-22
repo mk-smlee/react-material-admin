@@ -1,28 +1,25 @@
 import Button from "@material-ui/core/Button";
-import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router-dom";
 import { ReactComponent as ForbiddenSvg } from "../assets/403.svg";
 import Result from "../components/Result";
 
 const Forbidden = () => {
-  const { t } = useTranslation();
-
   return (
     <Result
       extra={
         <Button
           color="secondary"
           component={RouterLink}
-          to={`/${process.env.PUBLIC_URL}/admin`}
+          to={`/admin`}
           variant="contained"
         >
-          {t("common.backHome")}
+          홈으로 돌아가기
         </Button>
       }
       image={<ForbiddenSvg />}
       maxWidth="sm"
-      subTitle={t("common.errors.forbidden.subTitle")}
-      title={t("common.errors.unexpected.title")}
+      subTitle="이 페이지를 볼 수 있는 권한이 없습니다."
+      title="문제가 발생했습니다!"
     />
   );
 };

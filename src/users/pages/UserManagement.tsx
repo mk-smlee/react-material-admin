@@ -1,7 +1,6 @@
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
 import AdminAppBar from "../../admin/components/AdminAppBar";
 import AdminToolbar from "../../admin/components/AdminToolbar";
 import ConfirmDialog from "../../core/components/ConfirmDialog";
@@ -17,7 +16,6 @@ import { User } from "../types/user";
 
 const UserManagement = () => {
   const snackbar = useSnackbar();
-  const { t } = useTranslation();
 
   const [openConfirmDeleteDialog, setOpenConfirmDeleteDialog] = useState(false);
   const [openUserDialog, setOpenUserDialog] = useState(false);
@@ -35,43 +33,35 @@ const UserManagement = () => {
   const handleAddUser = async (user: Partial<User>) => {
     addUser(user as User)
       .then(() => {
-        snackbar.success(
-          t("userManagement.notifications.addSuccess", {
-            user: `${user.firstName} ${user.lastName}`,
-          })
-        );
+        snackbar.success(`${user.firstName} ${user.lastName}님이 추가되었습니다.`);
         setOpenUserDialog(false);
       })
       .catch(() => {
-        snackbar.error(t("common.errors.unexpected.subTitle"));
+        snackbar.error("문제가 발생했습니다. 다시 시도해주세요.");
       });
   };
 
   const handleDeleteUsers = async () => {
     deleteUsers(userDeleted)
       .then(() => {
-        snackbar.success(t("userManagement.notifications.deleteSuccess"));
+        snackbar.success("사용자가 삭제되었습니다.");
         setSelected([]);
         setUserDeleted([]);
         setOpenConfirmDeleteDialog(false);
       })
       .catch(() => {
-        snackbar.error(t("common.errors.unexpected.subTitle"));
+        snackbar.error("문제가 발생했습니다. 다시 시도해주세요.");
       });
   };
 
   const handleUpdateUser = async (user: User) => {
     updateUser(user)
       .then(() => {
-        snackbar.success(
-          t("userManagement.notifications.updateSuccess", {
-            user: `${user.firstName} ${user.lastName}`,
-          })
-        );
+        snackbar.success(`${user.firstName} ${user.lastName}님의 정보가 업데이트되었습니다.`);
         setOpenUserDialog(false);
       })
       .catch(() => {
-        snackbar.error(t("common.errors.unexpected.subTitle"));
+        snackbar.error("문제가 발생했습니다. 다시 시도해주세요.");
       });
   };
 
@@ -106,9 +96,9 @@ const UserManagement = () => {
     <React.Fragment>
       <AdminAppBar>
         {!selected.length ? (
-          <AdminToolbar title={t("userManagement.toolbar.title")}>
+          <AdminToolbar title="사용자 관리">
             <Fab
-              aria-label="logout"
+              aria-label="사용자 추가"
               color="primary"
               disabled={processing}
               onClick={() => handleOpenUserDialog()}
@@ -135,12 +125,12 @@ const UserManagement = () => {
         users={data}
       />
       <ConfirmDialog
-        description={t("userManagement.confirmations.delete")}
+        description="정말 이 사용자를 삭제하시겠습니까?"
         pending={processing}
         onClose={handleCloseConfirmDeleteDialog}
         onConfirm={handleDeleteUsers}
         open={openConfirmDeleteDialog}
-        title={t("common.confirmation")}
+        title="확인"
       />
       {openUserDialog && (
         <UserDialog

@@ -8,38 +8,27 @@ import Typography from "@material-ui/core/Typography";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonIcon from "@material-ui/icons/Person";
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { NavLink, Outlet } from "react-router-dom";
 import { useAuth } from "../../auth/contexts/AuthProvider";
 import QueryWrapper from "../../core/components/QueryWrapper";
 import { useSnackbar } from "../../core/contexts/SnackbarProvider";
 import AdminAppBar from "../components/AdminAppBar";
 import AdminToolbar from "../components/AdminToolbar";
-import CircleProgressWidget from "../widgets/CircleProgressWidget";
 
 const profileMenuItems = [
   {
-    key: "profile.menu.activity",
-    path: "",
-  },
-  {
-    key: "profile.menu.info",
-    path: "./information",
-  },
-  {
-    key: "profile.menu.password",
-    path: "./password",
+    label: "프로필 정보",
+    path: "./",
   },
 ];
 
 const Profile = () => {
-  const { isLoggingOut, logout, userInfo } = useAuth();
+  const { logout, userInfo } = useAuth();
   const snackbar = useSnackbar();
-  const { t } = useTranslation();
 
   const handleLogout = () => {
     logout().catch(() =>
-      snackbar.error(t("common.errors.unexpected.subTitle"))
+      snackbar.error("예상치 못한 오류가 발생했습니다.")
     );
   };
 
@@ -48,9 +37,8 @@ const Profile = () => {
       <AdminAppBar>
         <AdminToolbar>
           <Fab
-            aria-label="logout"
+            aria-label="로그아웃"
             color="secondary"
-            disabled={isLoggingOut}
             onClick={handleLogout}
           >
             <ExitToAppIcon />
@@ -82,24 +70,18 @@ const Profile = () => {
               component="div"
               variant="h4"
             >{`${userInfo?.firstName} ${userInfo?.lastName}`}</Typography>
-            <Typography variant="body2">{userInfo?.role}</Typography>
           </Box>
-          <CircleProgressWidget
-            height={244}
-            title={t("profile.completion.title")}
-            value={75}
-          />
         </Grid>
         <Grid item xs={12} md={8} marginTop={3}>
           <Box sx={{ mb: 4 }}>
-            <Tabs aria-label="profile nav tabs" value={false}>
+            <Tabs aria-label="프로필 메뉴" value={false}>
               {profileMenuItems.map((item) => (
                 <Tab
-                  key={item.key}
+                  key={item.label}
                   activeClassName="Mui-selected"
                   end={true}
                   component={NavLink}
-                  label={t(item.key)}
+                  label={item.label}
                   to={item.path}
                 />
               ))}

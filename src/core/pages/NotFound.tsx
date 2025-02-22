@@ -1,28 +1,25 @@
 import Button from "@material-ui/core/Button";
-import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router-dom";
 import Result from "../../core/components/Result";
 import { ReactComponent as NotFoundSvg } from "../assets/404.svg";
 
 const NotFound = () => {
-  const { t } = useTranslation();
-
   return (
     <Result
       extra={
         <Button
           color="secondary"
           component={RouterLink}
-          to={`/${process.env.PUBLIC_URL}/admin`}
+          to={`/admin`}
           variant="contained"
         >
-          {t("common.backHome")}
+          홈으로 돌아가기
         </Button>
       }
       image={<NotFoundSvg />}
       maxWidth="sm"
-      subTitle={t("common.errors.notFound.subTitle")}
-      title={t("common.errors.notFound.title")}
+      subTitle="찾고 있는 페이지를 찾을 수 없습니다. 입력한 URL을 다시 확인해주세요."
+      title="페이지를 찾을 수 없습니다."
     />
   );
 };

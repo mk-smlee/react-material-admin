@@ -19,7 +19,6 @@ import EditIcon from "@material-ui/icons/Edit";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import PersonIcon from "@material-ui/icons/Person";
 import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
 import Empty from "../../core/components/Empty";
 import * as selectUtils from "../../core/utils/selectUtils";
 import { User } from "../types/user";
@@ -31,26 +30,10 @@ interface HeadCell {
 }
 
 const headCells: HeadCell[] = [
-  {
-    id: "user",
-    align: "left",
-    label: "userManagement.table.headers.user",
-  },
-  {
-    id: "gender",
-    align: "center",
-    label: "userManagement.table.headers.gender",
-  },
-  {
-    id: "role",
-    align: "center",
-    label: "userManagement.table.headers.role",
-  },
-  {
-    id: "status",
-    align: "center",
-    label: "userManagement.table.headers.status",
-  },
+  { id: "user", align: "left", label: "사용자" },
+  { id: "gender", align: "center", label: "성별" },
+  { id: "role", align: "center", label: "역할" },
+  { id: "status", align: "center", label: "상태" },
 ];
 
 interface EnhancedTableProps {
@@ -59,13 +42,7 @@ interface EnhancedTableProps {
   rowCount: number;
 }
 
-function EnhancedTableHead({
-  onSelectAllClick,
-  numSelected,
-  rowCount,
-}: EnhancedTableProps) {
-  const { t } = useTranslation();
-
+function EnhancedTableHead({ onSelectAllClick, numSelected, rowCount }: EnhancedTableProps) {
   return (
     <TableHead>
       <TableRow sx={{ "& th": { border: 0 } }}>
@@ -75,19 +52,15 @@ function EnhancedTableHead({
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputProps={{
-              "aria-label": "select all users",
-            }}
+            inputProps={{ "aria-label": "모든 사용자 선택" }}
           />
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell key={headCell.id} align={headCell.align} sx={{ py: 0 }}>
-            {t(headCell.label)}
+            {headCell.label}
           </TableCell>
         ))}
-        <TableCell align="right" sx={{ py: 0 }}>
-          {t("userManagement.table.headers.actions")}
-        </TableCell>
+        <TableCell align="right" sx={{ py: 0 }}>작업</TableCell>
       </TableRow>
     </TableHead>
   );
@@ -103,18 +76,8 @@ type UserRowProps = {
   user: User;
 };
 
-const UserRow = ({
-  index,
-  onCheck,
-  onDelete,
-  onEdit,
-  processing,
-  selected,
-  user,
-}: UserRowProps) => {
+const UserRow = ({ index, onCheck, onDelete, onEdit, processing, selected, user }: UserRowProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { t } = useTranslation();
-
   const labelId = `enhanced-table-checkbox-${index}`;
   const openActions = Boolean(anchorEl);
 
@@ -137,91 +100,34 @@ const UserRow = ({
   };
 
   return (
-    <TableRow
-      aria-checked={selected}
-      tabIndex={-1}
-      key={user.id}
-      selected={selected}
-      sx={{ "& td": { bgcolor: "background.paper", border: 0 } }}
-    >
-      <TableCell
-        padding="checkbox"
-        sx={{ borderTopLeftRadius: "1rem", borderBottomLeftRadius: "1rem" }}
-      >
-        <Checkbox
-          color="primary"
-          checked={selected}
-          inputProps={{
-            "aria-labelledby": labelId,
-          }}
-          onClick={() => onCheck(user.id)}
-        />
+    <TableRow aria-checked={selected} tabIndex={-1} key={user.id} selected={selected} sx={{ "& td": { bgcolor: "background.paper", border: 0 } }}>
+      <TableCell padding="checkbox" sx={{ borderTopLeftRadius: "1rem", borderBottomLeftRadius: "1rem" }}>
+        <Checkbox color="primary" checked={selected} inputProps={{ "aria-labelledby": labelId }} onClick={() => onCheck(user.id)} />
       </TableCell>
       <TableCell>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Avatar sx={{ mr: 3 }}>
-            <PersonIcon />
-          </Avatar>
+          <Avatar sx={{ mr: 3 }}><PersonIcon /></Avatar>
           <Box>
-            <Typography component="div" variant="h6">
-              {`${user.lastName} ${user.firstName}`}
-            </Typography>
-            <Typography color="textSecondary" variant="body2">
-              {user.email}
-            </Typography>
+            <Typography component="div" variant="h6">{`${user.lastName} ${user.firstName}`}</Typography>
+            <Typography color="textSecondary" variant="body2">{user.email}</Typography>
           </Box>
         </Box>
       </TableCell>
       <TableCell align="center">{user.gender}</TableCell>
       <TableCell align="center">{user.role}</TableCell>
       <TableCell align="center">
-        {user.disabled ? (
-          <Chip label="Disabled" />
-        ) : (
-          <Chip color="primary" label="Active" />
-        )}
+        {user.disabled ? <Chip label="비활성화됨" /> : <Chip color="primary" label="활성" />}
       </TableCell>
-      <TableCell
-        align="right"
-        sx={{ borderTopRightRadius: "1rem", borderBottomRightRadius: "1rem" }}
-      >
-        <IconButton
-          id="user-row-menu-button"
-          aria-label="user actions"
-          aria-controls="user-row-menu"
-          aria-haspopup="true"
-          aria-expanded={openActions ? "true" : "false"}
-          disabled={processing}
-          onClick={handleOpenActions}
-        >
+      <TableCell align="right" sx={{ borderTopRightRadius: "1rem", borderBottomRightRadius: "1rem" }}>
+        <IconButton id="user-row-menu-button" aria-label="사용자 작업" aria-controls="user-row-menu" aria-haspopup="true" aria-expanded={openActions ? "true" : "false"} disabled={processing} onClick={handleOpenActions}>
           <MoreVertIcon />
         </IconButton>
-        <Menu
-          id="user-row-menu"
-          anchorEl={anchorEl}
-          aria-labelledby="user-row-menu-button"
-          open={openActions}
-          onClose={handleCloseActions}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-        >
+        <Menu id="user-row-menu" anchorEl={anchorEl} aria-labelledby="user-row-menu-button" open={openActions} onClose={handleCloseActions} anchorOrigin={{ vertical: "top", horizontal: "right" }} transformOrigin={{ vertical: "top", horizontal: "right" }}>
           <MenuItem onClick={handleEdit}>
-            <ListItemIcon>
-              <EditIcon />
-            </ListItemIcon>{" "}
-            {t("common.edit")}
+            <ListItemIcon><EditIcon /></ListItemIcon> 수정
           </MenuItem>
           <MenuItem onClick={handleDelete}>
-            <ListItemIcon>
-              <DeleteIcon />
-            </ListItemIcon>{" "}
-            {t("common.delete")}
+            <ListItemIcon><DeleteIcon /></ListItemIcon> 삭제
           </MenuItem>
         </Menu>
       </TableCell>
@@ -238,14 +144,7 @@ type UserTableProps = {
   users?: User[];
 };
 
-const UserTable = ({
-  onDelete,
-  onEdit,
-  onSelectedChange,
-  processing,
-  selected,
-  users = [],
-}: UserTableProps) => {
+const UserTable = ({ onDelete, onEdit, onSelectedChange, processing, selected, users = [] }: UserTableProps) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -267,9 +166,7 @@ const UserTable = ({
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -277,53 +174,23 @@ const UserTable = ({
   const isSelected = (id: string) => selected.indexOf(id) !== -1;
 
   if (users.length === 0) {
-    return <Empty title="No user yet" />;
+    return <Empty title="아직 사용자가 없습니다." />;
   }
 
   return (
-    <React.Fragment>
+    <>
       <TableContainer>
-        <Table
-          aria-labelledby="tableTitle"
-          sx={{
-            minWidth: 600,
-            borderCollapse: "separate",
-            borderSpacing: "0 1rem",
-          }}
-        >
-          <EnhancedTableHead
-            numSelected={selected.length}
-            onSelectAllClick={handleSelectAllClick}
-            rowCount={users.length}
-          />
+        <Table aria-labelledby="tableTitle" sx={{ minWidth: 600, borderCollapse: "separate", borderSpacing: "0 1rem" }}>
+          <EnhancedTableHead numSelected={selected.length} onSelectAllClick={handleSelectAllClick} rowCount={users.length} />
           <TableBody>
-            {users
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((user, index) => (
-                <UserRow
-                  index={index}
-                  key={user.id}
-                  onCheck={handleClick}
-                  onDelete={onDelete}
-                  onEdit={onEdit}
-                  processing={processing}
-                  selected={isSelected(user.id)}
-                  user={user}
-                />
-              ))}
+            {users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((user, index) => (
+              <UserRow key={user.id} index={index} onCheck={handleClick} onDelete={onDelete} onEdit={onEdit} processing={processing} selected={isSelected(user.id)} user={user} />
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={users.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </React.Fragment>
+      <TablePagination rowsPerPageOptions={[5, 10, 25]} component="div" count={users.length} rowsPerPage={rowsPerPage} page={page} onPageChange={handleChangePage} onRowsPerPageChange={handleChangeRowsPerPage} />
+    </>
   );
 };
 

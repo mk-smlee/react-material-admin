@@ -2,7 +2,6 @@ import Alert, { Color } from "@material-ui/core/Alert";
 import AlertTitle from "@material-ui/core/AlertTitle";
 import Snackbar from "@material-ui/core/Snackbar";
 import React, { createContext, useContext, useState } from "react";
-import { useTranslation } from "react-i18next";
 
 interface SnackbarContextInterface {
   error: (newMessage: string) => void;
@@ -16,7 +15,6 @@ type SnackbarProviderProps = {
 };
 
 const SnackbarProvider = ({ children }: SnackbarProviderProps) => {
-  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [title, setTitle] = useState("");
@@ -34,14 +32,14 @@ const SnackbarProvider = ({ children }: SnackbarProviderProps) => {
   };
 
   const error = (newMessage: string) => {
-    setTitle(t("common.snackbar.error"));
+    setTitle("오류");
     setMessage(newMessage);
     setSeverity("error");
     setOpen(true);
   };
 
   const success = (newMessage: string) => {
-    setTitle(t("common.snackbar.success"));
+    setTitle("성공");
     setMessage(newMessage);
     setSeverity("success");
     setOpen(true);

@@ -13,16 +13,14 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import TextField from "@material-ui/core/TextField";
 import LoadingButton from "@material-ui/lab/LoadingButton";
 import { useFormik } from "formik";
-import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { User } from "../types/user";
 
 const genders = [
-  { label: "userManagement.form.gender.options.f", value: "F" },
-  { label: "userManagement.form.gender.options.m", value: "M" },
-  { label: "userManagement.form.gender.options.n", value: "NC" },
+  { label: "여성", value: "F" },
+  { label: "남성", value: "M" },
 ];
-const roles = ["Admin", "Member"];
+const roles = ["관리자", "회원"];
 
 type UserDialogProps = {
   onAdd: (user: Partial<User>) => void;
@@ -41,8 +39,6 @@ const UserDialog = ({
   processing,
   user,
 }: UserDialogProps) => {
-  const { t } = useTranslation();
-
   const editMode = Boolean(user && user.id);
 
   const handleSubmit = (values: Partial<User>) => {
@@ -64,15 +60,15 @@ const UserDialog = ({
     },
     validationSchema: Yup.object({
       email: Yup.string()
-        .email(t("common.validations.email"))
-        .required(t("common.validations.required")),
+        .email("유효한 이메일 주소를 입력하세요.")
+        .required("필수 입력 항목입니다."),
       firstName: Yup.string()
-        .max(20, t("common.validations.max", { size: 20 }))
-        .required(t("common.validations.required")),
+        .max(20, "최대 20자까지 입력 가능합니다.")
+        .required("필수 입력 항목입니다."),
       lastName: Yup.string()
-        .max(30, t("common.validations.max", { size: 30 }))
-        .required(t("common.validations.required")),
-      role: Yup.string().required(t("common.validations.required")),
+        .max(30, "최대 30자까지 입력 가능합니다.")
+        .required("필수 입력 항목입니다."),
+      role: Yup.string().required("필수 입력 항목입니다."),
     }),
     onSubmit: handleSubmit,
   });
@@ -81,9 +77,7 @@ const UserDialog = ({
     <Dialog open={open} onClose={onClose} aria-labelledby="user-dialog-title">
       <form onSubmit={formik.handleSubmit} noValidate>
         <DialogTitle id="user-dialog-title">
-          {editMode
-            ? t("userManagement.modal.edit.title")
-            : t("userManagement.modal.add.title")}
+          {editMode ? "사용자 수정" : "사용자 추가"}
         </DialogTitle>
         <DialogContent>
           <TextField
@@ -91,7 +85,7 @@ const UserDialog = ({
             required
             fullWidth
             id="lastName"
-            label={t("userManagement.form.lastName.label")}
+            label="성"
             name="lastName"
             autoComplete="family-name"
             autoFocus
@@ -106,7 +100,7 @@ const UserDialog = ({
             required
             fullWidth
             id="firstName"
-            label={t("userManagement.form.firstName.label")}
+            label="이름"
             name="firstName"
             autoComplete="given-name"
             disabled={processing}
@@ -116,9 +110,7 @@ const UserDialog = ({
             helperText={formik.touched.firstName && formik.errors.firstName}
           />
           <FormControl component="fieldset" margin="normal">
-            <FormLabel component="legend">
-              {t("userManagement.form.gender.label")}
-            </FormLabel>
+            <FormLabel component="legend">성별</FormLabel>
             <RadioGroup
               row
               aria-label="gender"
@@ -132,7 +124,7 @@ const UserDialog = ({
                   disabled={processing}
                   value={gender.value}
                   control={<Radio />}
-                  label={t(gender.label)}
+                  label={gender.label}
                 />
               ))}
             </RadioGroup>
@@ -142,7 +134,7 @@ const UserDialog = ({
             required
             fullWidth
             id="email"
-            label={t("userManagement.form.email.label")}
+            label="이메일 주소"
             name="email"
             autoComplete="email"
             disabled={processing}
@@ -158,7 +150,7 @@ const UserDialog = ({
             disabled={processing}
             fullWidth
             select
-            label={t("userManagement.form.role.label")}
+            label="역할"
             name="role"
             value={formik.values.role}
             onChange={formik.handleChange}
@@ -178,16 +170,14 @@ const UserDialog = ({
               onChange={formik.handleChange}
               checked={formik.values.disabled}
               control={<Checkbox />}
-              label={t("userManagement.form.disabled.label")}
+              label="비활성화"
             />
           </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose}>{t("common.cancel")}</Button>
+          <Button onClick={onClose}>취소</Button>
           <LoadingButton loading={processing} type="submit" variant="contained">
-            {editMode
-              ? t("userManagement.modal.edit.action")
-              : t("userManagement.modal.add.action")}
+            {editMode ? "수정" : "추가"}
           </LoadingButton>
         </DialogActions>
       </form>

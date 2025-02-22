@@ -1,7 +1,6 @@
 import Button from "@material-ui/core/Button";
 import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { useTranslation } from "react-i18next";
 import { useQueryErrorResetBoundary } from "react-query";
 import Loader from "./Loader";
 import Result from "./Result";
@@ -12,7 +11,6 @@ type QueryWrapperProps = {
 
 const QueryWrapper = ({ children }: QueryWrapperProps) => {
   const { reset } = useQueryErrorResetBoundary();
-  const { t } = useTranslation();
 
   return (
     <ErrorBoundary
@@ -21,12 +19,12 @@ const QueryWrapper = ({ children }: QueryWrapperProps) => {
         <Result
           extra={
             <Button onClick={() => resetErrorBoundary()} variant="contained">
-              {t("common.retry")}
+              다시 시도
             </Button>
           }
           status="error"
-          subTitle={t("common.errors.unexpected.subTitle")}
-          title={t("common.errors.unexpected.title")}
+          subTitle="문제가 발생했습니다! 문제가 지속되면 문의해주세요."
+          title="오류 발생!"
         />
       )}
     >

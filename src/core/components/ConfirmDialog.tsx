@@ -5,7 +5,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import LoadingButton from "@material-ui/lab/LoadingButton";
-import { useTranslation } from "react-i18next";
 import { ReactComponent as ConfirmSvg } from "../assets/confirm.svg";
 import SvgContainer from "./SvgContainer";
 
@@ -26,8 +25,6 @@ const ConfirmDialog = ({
   pending,
   title,
 }: ConfirmDialogProps) => {
-  const { t } = useTranslation();
-
   return (
     <Dialog
       open={open}
@@ -49,14 +46,14 @@ const ConfirmDialog = ({
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>{t("common.cancel")}</Button>
+        <Button onClick={onClose}>취소</Button>
         <LoadingButton
           autoFocus
           onClick={onConfirm}
           loading={pending}
           variant="contained"
         >
-          {t("common.confirm")}
+          확인
         </LoadingButton>
       </DialogActions>
     </Dialog>
