@@ -9,10 +9,6 @@ const AdminLayout = () => {
   const { collapsed, changeCollapsed, open, toggleDrawer } = useSettings();
   const location = useLocation(); // 현재 경로 얻기
 
-  // const handleSettingsToggle = () => {
-  //   setSettingsOpen(!settingsOpen);
-  // };
-
   return (
     <Box sx={{ display: "flex" }}>
       <AdminDrawer
