@@ -1,8 +1,10 @@
-import React, { createContext, useContext } from "react";
-import { useLocalStorage } from "../../core/hooks/useLocalStorage";
+import React, { createContext, useContext } from 'react';
+import { useLocalStorage } from '../../core/hooks/useLocalStorage';
 // import { useLogin } from "../hooks/useLogin";
 // import { useUserInfo } from "../hooks/useUserInfo";
-import { UserInfo } from "../types/userInfo";
+import { UserInfo } from '../types/userInfo';
+import { useUserInfo } from '../hooks/useUserInfo';
+// import { useLogin } from '../hooks/useLogin';
 
 interface AuthContextInterface {
   isLoggingIn: boolean;
@@ -18,12 +20,10 @@ type AuthProviderProps = {
 };
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
-  // const [authKey, setAuthKey] = useLocalStorage<string>("authkey", "");
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setAuthKey] = useLocalStorage<string>("authkey", "");
+  const [authKey, setAuthKey] = useLocalStorage<string>("authkey", "");
   // const { isLoggingIn, login } = useLogin();
   const isLoggingIn = false; //로그인 없애기 위한 임시코드
-  // const { data: userInfo } = useUserInfo(authKey);
+  const { data: userInfo } = useUserInfo(authKey);
 
   const handleLogin = async (email: string, password: string) => {
     // return login({ email, password })
@@ -34,11 +34,12 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     //   .catch((err) => {
     //     throw err;
     //   });
-    return "key"; //로그인 없애기 위한 임시코드
+    setAuthKey('authkey');
+    return 'authkey'; //로그인 없애기 위한 임시코드
   };
 
   const handleLogout = async () => {
-    return setAuthKey("");
+    return setAuthKey('authkey');
   };
 
   return (
@@ -47,13 +48,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         isLoggingIn,
         login: handleLogin,
         logout: handleLogout,
-        userInfo: {
-          id: "1",
-          avatar: "",
-          email: "john@smith.com",
-          firstName: "John",
-          lastName: "Smith"
-        },
+        userInfo,
       }}
     >
       {children}

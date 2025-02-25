@@ -43,7 +43,8 @@
     "build:production": "env-cmd -f .env.production npm run build",
     "predeploy": "yarn run build:production",
     "deploy": "gh-pages -d build",
-    "start": "set NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "start:window": "set NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
     "test": "react-scripts test"
   },
   "eslintConfig": {

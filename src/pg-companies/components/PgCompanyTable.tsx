@@ -116,7 +116,7 @@ const PgCompanyRow = (props: PgCompanyRowProps) => {
 
       <TableCell>
         <Link
-          to={`/admin/pg-company/${props.pgCompany.id}`}
+          to={`/admin/pg-companies/${props.pgCompany.id}`}
           style={{ textDecoration: 'none', color: 'inherit' }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center' }}>

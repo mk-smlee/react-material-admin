@@ -84,7 +84,7 @@ const DistinctMonthRow = (props: distinctMonthProps) => {
         sx={{ borderTopLeftRadius: '1rem', borderBottomLeftRadius: '1rem' }}
       >
         <Link
-          to={`/admin/pg-company/${props.pgCompanyId}/monthly-settlement/${props.distinctMonth}`}
+          to={`/admin/pg-companies/${props.pgCompanyId}/monthly-settlement/${props.distinctMonth}`}
           style={{ textDecoration: 'none', color: 'inherit' }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center' }}>

@@ -7,7 +7,7 @@ import AdminDrawer from "../components/AdminDrawer";
 
 const AdminLayout = () => {
   const { collapsed, changeCollapsed, open, toggleDrawer } = useSettings();
-  const location = useLocation(); // 현재 경로 얻기
+  const location = useLocation(); 
 
   return (
     <Box sx={{ display: "flex" }}>

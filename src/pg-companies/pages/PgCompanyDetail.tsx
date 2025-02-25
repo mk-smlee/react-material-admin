@@ -12,6 +12,7 @@ import {
 import { convertEnumToLabel } from '../../core/utils/enumUtils';
 import { useDistinctMonths } from '../hooks/useDistinctMonths';
 import DistinctMonthTable from '../components/DistinctMonthTable';
+import Loader from '../../core/components/Loader';
 
 const PgCompanyDetail: React.FC = () => {
   const { id } = useParams();
@@ -141,11 +142,15 @@ const PgCompanyDetail: React.FC = () => {
         </Box>
       </Box>
 
-      <DistinctMonthTable
-        isLoading={isLoading}
-        pgCompanyId={id}
-        distinctMonths={distinctMonths}
-      />
+      {uploadMutation.isLoading ? (
+        <Loader />
+      ) : (
+        <DistinctMonthTable
+          isLoading={isLoading}
+          pgCompanyId={id}
+          distinctMonths={distinctMonths}
+        />
+      )}
     </React.Fragment>
   );
 };

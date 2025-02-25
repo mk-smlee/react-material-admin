@@ -15,6 +15,7 @@ import { MonthlySettlement as MonthlySettlementType } from '../types/monthlySett
 import AdminAppBar from '../../admin/components/AdminAppBar';
 import AdminToolbar from '../../admin/components/AdminToolbar';
 import { usePgCompanyById } from '../hooks/usePgCompanyById';
+import { headerCellType } from '../../core/types';
 
 const getDifferenceColor = (value: number) => {
   if (value < 0) return 'red';
@@ -42,17 +43,12 @@ const StyledDifferenceCell = ({
   </TableCell>
 );
 
-const MonthlySettlement: React.FC = () => {
+const PgMonthlySettlement: React.FC = () => {
   const { id, month } = useParams();
   const { data: pgCompany } = usePgCompanyById(id);
   const { data: monthlySettlements } = useMonthlySettlements(id, month);
 
-  const headerCells: {
-    id: string;
-    label: string;
-    align?: 'center' | 'left' | 'right';
-    isPercentage?: boolean;
-  }[] = [
+  const headerCells: headerCellType[] = [
     { id: 'agency_name', label: '대리점' },
     { id: 'merchant_name', label: '가맹점' },
     { id: 'mid', label: 'MID' },
@@ -64,12 +60,12 @@ const MonthlySettlement: React.FC = () => {
     { id: 'pg_calculated_fee', label: 'PG 수수료액' },
     { id: 'our_calculated_fee', label: 'MK 수수료액' },
     { id: 'fee_amount_difference', label: '수수료액 차이' },
-    { id: 'pg_surtax', label: 'PG 부가세' },
-    { id: 'our_surtax', label: 'MK 부가세' },
-    { id: 'surtax_amount_difference', label: '부가세 차이' },
-    { id: 'pg_expected_payment', label: 'PG 총액' },
-    { id: 'our_expected_payment', label: 'MK 총액' },
-    { id: 'expected_payment_difference', label: '총액 차이' },
+    // { id: 'pg_surtax', label: 'PG 부가세' },
+    // { id: 'our_surtax', label: 'MK 부가세' },
+    // { id: 'surtax_amount_difference', label: '부가세 차이' },
+    // { id: 'pg_expected_payment', label: 'PG 총액' },
+    // { id: 'our_expected_payment', label: 'MK 총액' },
+    // { id: 'expected_payment_difference', label: '총액 차이' },
   ];
 
   const summary = useMemo(() => {
@@ -170,13 +166,13 @@ const MonthlySettlement: React.FC = () => {
                     isPercentage
                   />
                   <TableCell align="center">
-                    {row.pg_calculated_fee.toLocaleString()}
+                    {row.pg_calculated_fee?.toLocaleString()}
                   </TableCell>
                   <TableCell align="center">
-                    {row.our_calculated_fee.toLocaleString()}
+                    {row.our_calculated_fee?.toLocaleString()}
                   </TableCell>
                   <StyledDifferenceCell value={row.fee_amount_difference} />
-                  <TableCell align="center">
+                  {/* <TableCell align="center">
                     {row.pg_surtax.toLocaleString()}
                   </TableCell>
                   <TableCell align="center">
@@ -191,7 +187,7 @@ const MonthlySettlement: React.FC = () => {
                   </TableCell>
                   <StyledDifferenceCell
                     value={row.expected_payment_difference}
-                  />
+                  /> */}
                 </TableRow>
               ))}
             </TableBody>
@@ -202,4 +198,4 @@ const MonthlySettlement: React.FC = () => {
   );
 };
 
-export default MonthlySettlement;
+export default PgMonthlySettlement;

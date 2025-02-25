@@ -18,14 +18,19 @@ const Forbidden = lazy(() => import('./core/pages/Forbidden'));
 const NotFound = lazy(() => import('./core/pages/NotFound'));
 
 // PgCompanies
-const PgCompany = lazy(() => import('./pg-company/pages/PgCompany'));
-const PgCompanyDetail = lazy(
-  () => import('./pg-company/pages/PgCompanyDetail'),
+const PgCompanies = lazy(() => import('./pg-companies/pages/PgCompanies'));
+const PgCompaniesDetail = lazy(
+  () => import('./pg-companies/pages/PgCompanyDetail'),
 );
-const MonthlySettlement = lazy(
-  // TODO: GPT가 구현해줄 페이지
-  () => import('./pg-company/pages/MonthlySettlement'),
+const PgMonthlySettlement = lazy(
+  () => import('./pg-companies/pages/PgMonthlySettlement'),
 );
+
+// Settlements
+const Settlements = lazy(() => import('./settlements/pages/Settlements'));
+const AgencySettlements = lazy(() => import('./settlements/pages/AgencySettlements'));
+const PenaltySales = lazy(() => import('./settlements/pages/PenaltySales'));
+const PenaltyDevice = lazy(() => import('./settlements/pages/PenaltyDevice'));
 
 // Users
 const UserManagement = lazy(() => import('./users/pages/UserManagement'));
@@ -41,13 +46,18 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<RedirectToAdmin />} />
       <PrivateRoute path="admin" element={<Admin />}>
-        <PrivateRoute path="/" element={<PgCompany />} />
-        <PrivateRoute path="pg-company" element={<PgCompany />} />
-        <PrivateRoute path="pg-company/:id" element={<PgCompanyDetail />} />
+        <PrivateRoute path="/" element={<PgCompanies />} />
+        <PrivateRoute path="pg-companies" element={<PgCompanies />} />
+        <PrivateRoute path="pg-companies/:id" element={<PgCompaniesDetail />} />
         <PrivateRoute
-          path="pg-company/:id/monthly-settlement/:month"
-          element={<MonthlySettlement />}
+          path="pg-companies/:id/monthly-settlement/:month"
+          element={<PgMonthlySettlement />}
         />
+        <PrivateRoute path="settlements" element={<Settlements />}>
+          <PrivateRoute path="/" element={<AgencySettlements />} />
+          <PrivateRoute path="/penalty/sales" element={<PenaltySales />} />
+          <PrivateRoute path="/penalty/device" element={<PenaltyDevice />} />
+        </PrivateRoute>
         <PrivateRoute path="profile" element={<Profile />}>
           <PrivateRoute path="/" element={<ProfileInformation />} />
         </PrivateRoute>
