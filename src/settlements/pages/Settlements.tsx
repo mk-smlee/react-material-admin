@@ -1,14 +1,15 @@
+import React from 'react';
 import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
-import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import QueryWrapper from '../../core/components/QueryWrapper';
 import AdminAppBar from '../../admin/components/AdminAppBar';
 import AdminToolbar from '../../admin/components/AdminToolbar';
+import SettlementMonthSelector from '../components/SettlementMonthSelector';
+import { SettlementProvider } from '../contexts/SettlementContext';
 
-const settlementMenuItems = [
+export const settlementMenuItems = [
   {
     label: '대리점 정산',
     path: '',
@@ -23,13 +24,21 @@ const settlementMenuItems = [
   },
 ];
 
-const Settlements = () => {
+const SettlementsLayout: React.FC = () => {
   return (
-    <React.Fragment>
+    <SettlementProvider>
       <AdminAppBar>
         <AdminToolbar title="정산관리" />
       </AdminAppBar>
-      <Box sx={{ mb: 4 }}>
+
+      <Box
+        sx={{
+          mb: 2,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
         <Tabs aria-label="정산 관리 메뉴" value={false}>
           {settlementMenuItems.map((item) => (
             <Tab
@@ -42,12 +51,15 @@ const Settlements = () => {
             />
           ))}
         </Tabs>
+
+        <SettlementMonthSelector />
       </Box>
+
       <QueryWrapper>
         <Outlet />
       </QueryWrapper>
-    </React.Fragment>
+    </SettlementProvider>
   );
 };
 
-export default Settlements;
+export default SettlementsLayout;

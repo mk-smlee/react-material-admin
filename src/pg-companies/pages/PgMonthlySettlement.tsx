@@ -115,7 +115,7 @@ const PgMonthlySettlement: React.FC = () => {
           component={Paper}
           sx={{ maxHeight: 'calc(100vh - 180px)', overflow: 'auto' }}
         >
-          <Table stickyHeader>
+          <Table stickyHeader size="small">
             <TableHead>
               <TableRow>
                 {headerCells.map((cell) => (
@@ -134,7 +134,12 @@ const PgMonthlySettlement: React.FC = () => {
             </TableHead>
             <TableBody>
               {dataToRender.map((row: MonthlySettlementType, index: number) => (
-                <TableRow key={index}>
+                <TableRow
+                  key={index}
+                  sx={{
+                    backgroundColor: index === 0 && summary ? '#f9f9f9' : '',
+                  }}
+                >
                   {index === 0 && summary ? (
                     <TableCell
                       align="center"
@@ -147,7 +152,14 @@ const PgMonthlySettlement: React.FC = () => {
                     <React.Fragment>
                       <TableCell align="center">{row.agency_name}</TableCell>
                       <TableCell align="center">{row.merchant_name}</TableCell>
-                      <TableCell align="center">{row.mid}</TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          color: getDifferenceColor(row.fee_rate_difference),
+                        }}
+                      >
+                        {row.mid}
+                      </TableCell>
                       <TableCell align="center">{row.sme_grade}</TableCell>
                     </React.Fragment>
                   )}
