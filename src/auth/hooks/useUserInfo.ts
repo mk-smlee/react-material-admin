@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import { UserInfo } from '../types/userInfo';
 
 const fetchUserInfo = async (key?: string): Promise<UserInfo> => {
-  // const { data } = await axios.get("/api/user-info", { params: { key } });
+  // const { data } = await api.get("/api/user-info", { params: { key } });
   // return data;
   return {
     id: '1',

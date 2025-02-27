@@ -1,14 +1,14 @@
-import axios from 'axios';
 import { useQuery } from 'react-query';
 import { AgencyCommissionItem } from '../types/agencyCommission';
+import api from '../../api';
 
 /**
  * 특정 월(yyyy-MM)에 대한 대리점 수수료 정산 정보를 조회
  * @param month 예: '2023-02'
  */
 async function fetchAgencyCommission(month: string): Promise<AgencyCommissionItem[]> {
-  const { data } = await axios.get(
-    `http://localhost:8080/v1/monthly-settlements/agency-commission/${month}`,
+  const { data } = await api.get(
+    `/monthly-settlements/agency-commission/${month}`,
   );
   return data;
 }

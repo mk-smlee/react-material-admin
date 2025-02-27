@@ -1,9 +1,9 @@
-import axios from "axios";
 import { useQuery } from "react-query";
 import { ProfileInfo } from "../types/profileInfo";
+import api from "../../api";
 
 const fetchProfileInfo = async (): Promise<ProfileInfo> => {
-  const { data } = await axios.get("/api/profile-info");
+  const { data } = await api.get("/api/profile-info");
   return data;
 };
 

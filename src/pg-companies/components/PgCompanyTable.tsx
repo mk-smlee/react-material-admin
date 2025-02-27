@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Checkbox,
   IconButton,
@@ -20,6 +21,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { selectAll, selectOne } from '../../core/utils/selectUtils';
 import { Link } from 'react-router-dom';
+import CreditCard from '@material-ui/icons/CreditCard';
 
 interface HeadCell {
   id: string;
@@ -41,7 +43,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   return (
     <TableHead>
       <TableRow sx={{ '& th': { border: 0 } }}>
-        <TableCell sx={{ py: 0 }}>
+        {/* <TableCell sx={{ py: 0 }}>
           <Checkbox
             color="primary"
             indeterminate={
@@ -51,7 +53,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             onChange={props.onSelectAllClick}
             inputProps={{ 'aria-label': '모든 사용자 선택' }}
           />
-        </TableCell>
+        </TableCell> */}
         {headCells.map((headCell) => (
           <TableCell key={headCell.id} align={headCell.align} sx={{ py: 0 }}>
             {headCell.label}
@@ -102,7 +104,7 @@ const PgCompanyRow = (props: PgCompanyRowProps) => {
       selected={props.selected}
       sx={{ '& td': { bgcolor: 'background.paper', border: 0 } }}
     >
-      <TableCell
+      {/* <TableCell
         padding="checkbox"
         sx={{ borderTopLeftRadius: '1rem', borderBottomLeftRadius: '1rem' }}
       >
@@ -112,14 +114,19 @@ const PgCompanyRow = (props: PgCompanyRowProps) => {
           inputProps={{ 'aria-labelledby': labelId }}
           onClick={() => props.onCheck(props.pgCompany.id)}
         />
-      </TableCell>
+      </TableCell> */}
 
-      <TableCell>
+      <TableCell
+        sx={{ borderTopLeftRadius: '1rem', borderBottomLeftRadius: '1rem' }}
+      >
         <Link
           to={`/admin/pg-companies/${props.pgCompany.id}`}
           style={{ textDecoration: 'none', color: 'inherit' }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Avatar sx={{ mr: 3 }}>
+              <CreditCard />
+            </Avatar>
             <Box>
               <Typography component="div" variant="h4">
                 {props.pgCompany.name}

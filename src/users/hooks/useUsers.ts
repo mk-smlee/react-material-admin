@@ -1,9 +1,9 @@
-import axios from "axios";
 import { useQuery } from "react-query";
 import { User } from "../types/user";
+import api from "../../api";
 
 const fetchUsers = async (): Promise<User[]> => {
-  const { data } = await axios.get("/api/users");
+  const { data } = await api.get("/api/users");
   return data;
 };
 

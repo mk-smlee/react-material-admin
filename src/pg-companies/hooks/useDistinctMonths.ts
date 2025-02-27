@@ -1,11 +1,11 @@
-import axios from 'axios';
 import { useQuery } from 'react-query';
+import api from '../../api';
 
 const fetchDistinctMonths = async (
   pgCompanyId: string,
 ): Promise<string[]> => {
-  const { data } = await axios.get(
-    `http://localhost:8080/v1/raw-settlement-files/distinct-months/${pgCompanyId}`,
+  const { data } = await api.get(
+    `/raw-settlement-files/distinct-months/${pgCompanyId}`,
   );
   return data;
 };
