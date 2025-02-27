@@ -28,7 +28,7 @@ const PgMonthlySettlement = lazy(
 
 // Settlements
 const Settlements = lazy(() => import('./settlements/pages/Settlements'));
-const AgencySettlements = lazy(() => import('./settlements/pages/AgencySettlements'));
+const AgencyCommission = lazy(() => import('./settlements/pages/AgencyCommission'));
 const PenaltySales = lazy(() => import('./settlements/pages/PenaltySales'));
 const PenaltyDevice = lazy(() => import('./settlements/pages/PenaltyDevice'));
 
@@ -54,7 +54,7 @@ const AppRoutes = () => {
           element={<PgMonthlySettlement />}
         />
         <PrivateRoute path="settlements" element={<Settlements />}>
-          <PrivateRoute path="/" element={<AgencySettlements />} />
+          <PrivateRoute path="/" element={<AgencyCommission />} />
           <PrivateRoute path="/penalty/sales" element={<PenaltySales />} />
           <PrivateRoute path="/penalty/device" element={<PenaltyDevice />} />
         </PrivateRoute>

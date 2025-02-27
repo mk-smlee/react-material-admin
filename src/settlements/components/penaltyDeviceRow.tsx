@@ -85,6 +85,7 @@ const penaltyDeviceRow = (agency: AgencyDeviceItem) => {
       <TableRow>
         {/* "대리점명 합계" 칸 등 필요하면 재구성 */}
         <TableCell
+          colSpan={2}
           align="center"
           sx={{ backgroundColor: '#f9f9f9', fontWeight: 'bold' }}
         >
@@ -94,7 +95,7 @@ const penaltyDeviceRow = (agency: AgencyDeviceItem) => {
         </TableCell>
         {/* colSpan = 전체 열 - 이미 1칸 사용 */}
         <TableCell
-          colSpan={8}
+          colSpan={7}
           align="right"
           sx={{ backgroundColor: '#f9f9f9', fontWeight: 'bold' }}
         >
@@ -113,7 +114,9 @@ const penaltyDeviceRow = (agency: AgencyDeviceItem) => {
             </Box>
             <Box>
               <Typography variant="subtitle2">미달성</Typography>
-              <Typography color="textSecondary">
+              <Typography
+                color={agency.shortfall > 0 ? 'error' : 'textSecondary'}
+              >
                 {agency.shortfall.toLocaleString()}원
               </Typography>
             </Box>
@@ -134,7 +137,9 @@ const penaltyDeviceRow = (agency: AgencyDeviceItem) => {
                   (VAT 제외)
                 </Typography>
               </Box>
-              <Typography color="textSecondary">
+              <Typography
+                color={agency.shortfall > 0 ? 'error' : 'textSecondary'}
+              >
                 {agency.totalPenalty.toLocaleString()}원
               </Typography>
             </Box>

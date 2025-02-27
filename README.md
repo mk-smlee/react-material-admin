@@ -1,82 +1,20 @@
-<p align="center">
-  <a href="https://m6v3l9.github.io/react-material-admin/" rel="noopener" target="_blank"><img width="120" src="https://m6v3l9.github.io/react-material-admin/logo.svg" alt="React Material Admin logo"></a></p>
-</p>
+# PG 월간 정산
 
-<h1 align="center">React Material Admin</h1>
-<p align="center">
-<b>react-material-admin</b> is a free and open-source admin  application including many real-world examples. It is based on React and Material-UI.
-</p>
+- 월간 결제 목록을 제공해주는 PG사는 '엑셀파일 1개만 제공'해주는 것으로 가정.
+- 일간 결제 목록을 제공해주는 PG사는 '여러개의 엑셀 파일을 제공'으로 가정.
 
-[![react-material-admin-demo](https://cdn.dribbble.com/users/6538082/screenshots/15805144/media/5687464c7190019afb748863ac6957d3.png?compress=1&resize=1200x900)](https://m6v3l9.github.io/react-material-admin/)
+# 대리점 월간 정산
 
-## Getting Started
+- 특이사항 없음
 
-```
-# Install dependencies
-yarn install
+# 매출 약정 패널티
 
-# Run the app
-yarn start
-```
+- 매출이 없는 가맹점은 보여주지 않음
+- 모든 가맹점에 매출이 없어도, 매출 약정을 맺은 대리점은 보여줌
+- 약정 유예 등 특이사항은 비고를 통해 수기로 관리
 
-This will automatically open [http://localhost:3000](http://localhost:3000).
+# 기기 약정 패널티
 
-## Features
-
-```
-- Admin
-  - Home
-  - Dashboard/Charts
-  - FAQ
-  - Help Center
-  - Profile Activity
-  - Profile Information
-  - Profile Password
-- Auth
-  - Forgot Password
-  - Forgot Password Submit
-  - Login
-  - Register
-- Calendar App
-- Core
-  - Forbidden
-  - Not Found
-  - Under Constructions
-- Landing
-- User Management
-```
-
-## Technologies
-
-| Package               | Description                                    | Docs                                                                            |
-| --------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------- |
-| Analytics             | Google Analytics                               | [Docs](https://analytics.google.com/analytics/web/react-ga)                     |
-| Bundle Size Analyzer  | Source map explorer                            | [Docs](https://create-react-app.dev/docs/analyzing-the-bundle-size)             |
-| Charts                | Recharts                                       | [Docs](https://recharts.org/)                                                   |
-| CI                    | Github CI                                      | [Docs]()                                                                        |
-| Code Splitting        | Route-based code splitting (included in React) | [Docs](https://reactjs.org/docs/code-splitting.html#route-based-code-splitting) |
-| Components            | Material-UI                                    | [Docs](https://material-ui.com/)                                                |
-| Data Fetching         | React Query Toolkit                            | [Docs](https://react-query.tanstack.com/)                                       |
-| Deployment            | Github Pages                                   | [Docs](https://create-react-app.dev/docs/deployment#github-pages)               |
-| Environment Variables | Dotenv (included in Create React App)          | [Docs](https://create-react-app.dev/docs/adding-custom-environment-variables)   |
-| Error Monitoring      | Sentry                                         | [Docs](https://docs.sentry.io/platforms/javascript/guides/react/)               |
-| Form                  | Formik                                         | [Docs](https://formik.org/)                                                     |
-| I18N                  | react-i18next                                  | [Docs](https://react.i18next.com/)                                              |
-| Routing               | React Router                                   | [Docs](https://reactrouter.com/)                                                |
-| Theming (+ dark mode) | Material-UI                                    | [Docs](https://material-ui.com/customization/theming/)                          |
-| Toolchain             | Create React App                               | [Docs](https://create-react-app.dev/)                                           |
-| TypeScript            | TypeScript                                     | [Docs](https://create-react-app.dev/docs/adding-typescript/)                    |
-| Validation            | Yup                                            | [Docs](https://github.com/jquense/yup)                                          |
-
-## Coming Soon
-
-| Package      | Description                                 | Docs                            |
-| ------------ | ------------------------------------------- | ------------------------------- |
-| Drag & Drop  | Add Projects page with Drag & Drop features |                                 |
-| E2E Testing  | Cypress                                     | [Docs](https://www.cypress.io/) |
-| Unit Testing | Jest                                        | [Docs](https://jestjs.io/)      |
-
-## License
-
-This project is licensed under the terms of the
-[MIT license](/LICENSE).
+- 기기약정을 맺지 않은 가맹점이어도, 기기약정 관리에 등록되어있으면 표출해주어야함 (요구사항) 
+- 패널티 유예 등 특이사항은 비고를 통해 수기로 관리
+- 한국아이티 내 일부 가맹점과, 덮밥한상과 같은 대리점이 없는 가맹점은 추후 별도 처리 필요. (현재는 수기로 관리) 

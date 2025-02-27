@@ -7,7 +7,7 @@ const fetchMonthlySettlements = async (
   month: string
 ): Promise<MonthlySettlement[]> => {
   const { data } = await axios.get(
-    `http://localhost:8080/v1/monthly-settlements/${pgCompanyId}/${month}`
+    `http://localhost:8080/v1/monthly-settlements/pg-settlement/${pgCompanyId}/${month}`
   );
   return data;
 };

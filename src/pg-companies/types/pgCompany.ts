@@ -1,8 +1,8 @@
 export interface PgCompany {
   id: string;
   name: string;
+  is_direct_agency_payout: boolean;
   monthly_excel_format: MonthlyExcelFormatEnum;
-  daily_excel_format: DailyExcelFormatEnum;
 }
 
 export enum MonthlyExcelFormatEnum {
@@ -10,17 +10,12 @@ export enum MonthlyExcelFormatEnum {
   DAILY = 20, //일별
 }
 
-export enum DailyExcelFormatEnum {
-  DAILY = 20, //일별
-  PER_TRANSACTION = 30, //결제건별
-}
+export const IsDirectAgencyPayoutLabels: Record<number, string> = {
+  1: 'PG사 정산', //true
+  0: '먼키 정산', //false
+};
 
 export const MonthlyExcelFormatLabels: Record<number, string> = {
   [MonthlyExcelFormatEnum.MONTHLY]: '월별',
   [MonthlyExcelFormatEnum.DAILY]: '일별',
-};
-
-export const DailyExcelFormatLabels: Record<number, string> = {
-  [DailyExcelFormatEnum.DAILY]: '일별',
-  [DailyExcelFormatEnum.PER_TRANSACTION]: '결제건별',
 };

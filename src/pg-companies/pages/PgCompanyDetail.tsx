@@ -6,7 +6,7 @@ import AdminToolbar from '../../admin/components/AdminToolbar';
 import { useUploadMonthlySettlement } from '../hooks/useUploadMonthlySettlement';
 import { usePgCompanyById } from '../hooks/usePgCompanyById';
 import {
-  DailyExcelFormatLabels,
+  IsDirectAgencyPayoutLabels,
   MonthlyExcelFormatLabels,
 } from '../types/pgCompany';
 import { convertEnumToLabel } from '../../core/utils/enumUtils';
@@ -79,20 +79,20 @@ const PgCompanyDetail: React.FC = () => {
           </Typography>
         </Box>
         <Box>
+          <Typography variant="h6">대리점 정산 방식:</Typography>
+          <Typography variant="body1" color="textSecondary">
+            {convertEnumToLabel(
+              IsDirectAgencyPayoutLabels,
+              Number(pgCompany?.is_direct_agency_payout),
+            )}
+          </Typography>
+        </Box>
+        <Box>
           <Typography variant="h6">월간 정산 포맷:</Typography>
           <Typography variant="body1" color="textSecondary">
             {convertEnumToLabel(
               MonthlyExcelFormatLabels,
               pgCompany?.monthly_excel_format || 0,
-            )}
-          </Typography>
-        </Box>
-        <Box>
-          <Typography variant="h6">일간 정산 포맷:</Typography>
-          <Typography variant="body1" color="textSecondary">
-            {convertEnumToLabel(
-              DailyExcelFormatLabels,
-              pgCompany?.daily_excel_format || 0,
             )}
           </Typography>
         </Box>

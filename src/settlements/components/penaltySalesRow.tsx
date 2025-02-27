@@ -72,15 +72,16 @@ const penaltySalesRow = (agency: AgencyPenaltyItem) => {
       {/* 3) 마지막 소계 row */}
       <TableRow>
         <TableCell
+          colSpan={2}
           align="center"
           sx={{ backgroundColor: '#f9f9f9', fontWeight: 'bold' }}
         >
-          <Typography component="div" variant="h4">
+          <Typography component="div" variant="h5">
             {agency.agencyName} 합계
           </Typography>
         </TableCell>
         <TableCell
-          colSpan={4}
+          colSpan={3}
           align="right"
           sx={{ backgroundColor: '#f9f9f9', fontWeight: 'bold' }}
         >
@@ -99,8 +100,16 @@ const penaltySalesRow = (agency: AgencyPenaltyItem) => {
             </Box>
             <Box>
               <Typography variant="subtitle2">미달성</Typography>
-              <Typography color="textSecondary">
+              <Typography
+                color={agency.shortfall > 0 ? 'error' : 'textSecondary'}
+              >
                 {agency.shortfall.toLocaleString()}원
+              </Typography>
+            </Box>
+            <Box>
+              <Typography variant="subtitle2">패널티율</Typography>
+              <Typography color="textSecondary">
+                {Number(agency.penaltyRate) * 100}%
               </Typography>
             </Box>
             <Box>
@@ -114,8 +123,9 @@ const penaltySalesRow = (agency: AgencyPenaltyItem) => {
                   (VAT 제외)
                 </Typography>
               </Box>
-
-              <Typography color="textSecondary">
+              <Typography
+                color={agency.shortfall > 0 ? 'error' : 'textSecondary'}
+              >
                 {agency.penalty.toLocaleString()}원
               </Typography>
             </Box>

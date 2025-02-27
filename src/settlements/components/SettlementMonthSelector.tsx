@@ -20,9 +20,9 @@ const SettlementMonthSelector = () => {
         onChange={handleChange}
         InputLabelProps={{ shrink: true }}
       />
-      <Button variant="contained" color="primary" sx={{ padding: '8px 12px' }}>
+      {/* <Button variant="contained" color="primary" sx={{ padding: '8px 12px' }}>
         조회
-      </Button>
+      </Button> */}
     </Box>
   );
 };
