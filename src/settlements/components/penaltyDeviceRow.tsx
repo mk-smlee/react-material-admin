@@ -103,13 +103,13 @@ const penaltyDeviceRow = (agency: AgencyDeviceItem) => {
             <Box>
               <Typography variant="subtitle2">약정금액</Typography>
               <Typography color="textSecondary">
-                {agency.agencyMonthlyCommitted.toLocaleString()}원
+                {agency.agencyMonthlyCommitted.toLocaleString()}
               </Typography>
             </Box>
             <Box>
               <Typography variant="subtitle2">월매출</Typography>
               <Typography color="textSecondary">
-                {agency.agencyMonthlySales.toLocaleString()}원
+                {agency.agencyMonthlySales.toLocaleString()}
               </Typography>
             </Box>
             <Box>
@@ -117,7 +117,7 @@ const penaltyDeviceRow = (agency: AgencyDeviceItem) => {
               <Typography
                 color={agency.shortfall > 0 ? 'error' : 'textSecondary'}
               >
-                {agency.shortfall.toLocaleString()}원
+                {agency.shortfall.toLocaleString()}
               </Typography>
             </Box>
             <Box>
@@ -140,7 +140,7 @@ const penaltyDeviceRow = (agency: AgencyDeviceItem) => {
               <Typography
                 color={agency.shortfall > 0 ? 'error' : 'textSecondary'}
               >
-                {agency.totalPenalty.toLocaleString()}원
+                {agency.totalPenalty.toLocaleString()}
               </Typography>
             </Box>
           </Box>

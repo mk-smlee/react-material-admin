@@ -1,9 +1,9 @@
-import axios from 'axios';
 import { useMutation } from 'react-query';
+import api from '../../api';
 
 export const useUploadMonthlySettlement = (id: string) => {
   return useMutation((formData: FormData) =>
-    axios.post(`/raw-settlement-files/${id}`, formData, {
+    api.post(`/raw-settlement-files/${id}`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
   );

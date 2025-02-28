@@ -1,11 +1,11 @@
-import axios from "axios";
 import { useMutation, useQueryClient } from "react-query";
 import { ProfileInfo } from "../types/profileInfo";
+import api from "../../api";
 
 const updateProfileInfo = async (
   profileInfo: ProfileInfo
 ): Promise<ProfileInfo> => {
-  const { data } = await axios.put("/api/profile-info", profileInfo);
+  const { data } = await api.put("/api/profile-info", profileInfo);
   return data;
 };
 

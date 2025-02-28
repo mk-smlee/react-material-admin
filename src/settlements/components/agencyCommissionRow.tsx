@@ -104,25 +104,25 @@ const agencyCommissionRow = (agency: AgencyCommissionItem) => {
             <Box>
               <Typography variant="subtitle2">총 결제액</Typography>
               <Typography color="textSecondary">
-                {agency.totalSales.toLocaleString()}원
+                {agency.totalSales.toLocaleString()}
               </Typography>
             </Box>
             <Box>
               <Typography variant="subtitle2">총 수수료</Typography>
               <Typography color="textSecondary">
-                {agency.totalCommission.toLocaleString()}원
+                {agency.totalCommission.toLocaleString()}
               </Typography>
             </Box>
             <Box>
-              <Typography variant="subtitle2">총 수수료 VAT</Typography>
+              <Typography variant="subtitle2">VAT</Typography>
               <Typography color="textSecondary">
-                {agency.totalVat.toLocaleString()}원
+                {agency.totalVat.toLocaleString()}
               </Typography>
             </Box>
             <Box>
               <Typography variant="subtitle2">총 정산액</Typography>
               <Typography color="textSecondary">
-                {agency.totalPayout.toLocaleString()}원
+                {agency.totalPayout.toLocaleString()}
               </Typography>
             </Box>
           </Box>

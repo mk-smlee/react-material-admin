@@ -1,7 +1,6 @@
 import {
   Avatar,
   Box,
-  Checkbox,
   IconButton,
   ListItemIcon,
   Menu,
@@ -77,7 +76,6 @@ type PgCompanyRowProps = {
 
 const PgCompanyRow = (props: PgCompanyRowProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const labelId = `enhanced-table-checkbox-${props.index}`;
   const openActions = Boolean(anchorEl);
 
   const handleOpenActions = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -104,18 +102,6 @@ const PgCompanyRow = (props: PgCompanyRowProps) => {
       selected={props.selected}
       sx={{ '& td': { bgcolor: 'background.paper', border: 0 } }}
     >
-      {/* <TableCell
-        padding="checkbox"
-        sx={{ borderTopLeftRadius: '1rem', borderBottomLeftRadius: '1rem' }}
-      >
-        <Checkbox
-          color="primary"
-          checked={props.selected}
-          inputProps={{ 'aria-labelledby': labelId }}
-          onClick={() => props.onCheck(props.pgCompany.id)}
-        />
-      </TableCell> */}
-
       <TableCell
         sx={{ borderTopLeftRadius: '1rem', borderBottomLeftRadius: '1rem' }}
       >

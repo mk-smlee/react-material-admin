@@ -89,13 +89,13 @@ const penaltySalesRow = (agency: AgencyPenaltyItem) => {
             <Box>
               <Typography variant="subtitle2">약정액</Typography>
               <Typography color="textSecondary">
-                {agency.monthlyCommittedSales.toLocaleString()}원
+                {agency.monthlyCommittedSales.toLocaleString()}
               </Typography>
             </Box>
             <Box>
               <Typography variant="subtitle2">매출액</Typography>
               <Typography color="textSecondary">
-                {agency.agencyMonthlySales.toLocaleString()}원
+                {agency.agencyMonthlySales.toLocaleString()}
               </Typography>
             </Box>
             <Box>
@@ -103,7 +103,7 @@ const penaltySalesRow = (agency: AgencyPenaltyItem) => {
               <Typography
                 color={agency.shortfall > 0 ? 'error' : 'textSecondary'}
               >
-                {agency.shortfall.toLocaleString()}원
+                {agency.shortfall.toLocaleString()}
               </Typography>
             </Box>
             <Box>
@@ -126,7 +126,7 @@ const penaltySalesRow = (agency: AgencyPenaltyItem) => {
               <Typography
                 color={agency.shortfall > 0 ? 'error' : 'textSecondary'}
               >
-                {agency.penalty.toLocaleString()}원
+                {agency.penalty.toLocaleString()}
               </Typography>
             </Box>
           </Box>
