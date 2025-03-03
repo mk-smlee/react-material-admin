@@ -1,9 +1,9 @@
 import { useQuery } from "react-query";
 import { PgCompany } from "../types/pgCompany";
-import api from "../../api";
+import { apiService } from "../../api";
 
 const fetchPgCompanyById = async (id: string): Promise<PgCompany> => {
-  const { data } = await api.get(`/pg-companies/${id}`);
+  const data = await apiService.get<PgCompany>(`/pg-companies/${id}`);
   return data;
 };
 

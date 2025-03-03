@@ -62,20 +62,20 @@ const PgCompanyDetail: React.FC = () => {
   return (
     <React.Fragment>
       <AdminAppBar>
-        <AdminToolbar title={pgCompany?.name} />
+        <AdminToolbar title={pgCompany?.pgCompanyName} />
       </AdminAppBar>
 
       <Box display="grid" gridTemplateColumns="1fr 1fr" gap={2}>
         <Box>
           <Typography variant="h6">ID:</Typography>
           <Typography variant="body1" color="textSecondary">
-            {pgCompany?.id}
+            {pgCompany?.pgCompanyId}
           </Typography>
         </Box>
         <Box>
           <Typography variant="h6">이름:</Typography>
           <Typography variant="body1" color="textSecondary">
-            {pgCompany?.name}
+            {pgCompany?.pgCompanyName}
           </Typography>
         </Box>
         <Box>
@@ -83,7 +83,7 @@ const PgCompanyDetail: React.FC = () => {
           <Typography variant="body1" color="textSecondary">
             {convertEnumToLabel(
               IsDirectAgencyPayoutLabels,
-              Number(pgCompany?.is_direct_agency_payout),
+              Number(pgCompany?.isDirectAgencyPayout),
             )}
           </Typography>
         </Box>
@@ -92,7 +92,7 @@ const PgCompanyDetail: React.FC = () => {
           <Typography variant="body1" color="textSecondary">
             {convertEnumToLabel(
               MonthlyExcelFormatLabels,
-              pgCompany?.monthly_excel_format || 0,
+              pgCompany?.monthlyExcelFormat || 0,
             )}
           </Typography>
         </Box>

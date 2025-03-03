@@ -98,7 +98,7 @@ const PgCompanyRow = (props: PgCompanyRowProps) => {
     <TableRow
       aria-checked={props.selected}
       tabIndex={-1}
-      key={props.pgCompany.id}
+      key={props.pgCompany.pgCompanyId}
       selected={props.selected}
       sx={{ '& td': { bgcolor: 'background.paper', border: 0 } }}
     >
@@ -106,7 +106,7 @@ const PgCompanyRow = (props: PgCompanyRowProps) => {
         sx={{ borderTopLeftRadius: '1rem', borderBottomLeftRadius: '1rem' }}
       >
         <Link
-          to={`/admin/pg-companies/${props.pgCompany.id}`}
+          to={`/admin/pg-companies/${props.pgCompany.pgCompanyId}`}
           style={{ textDecoration: 'none', color: 'inherit' }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -115,7 +115,7 @@ const PgCompanyRow = (props: PgCompanyRowProps) => {
             </Avatar>
             <Box>
               <Typography component="div" variant="h4">
-                {props.pgCompany.name}
+                {props.pgCompany.pgCompanyName}
               </Typography>
             </Box>
           </Box>
@@ -208,8 +208,8 @@ const PgCompanyTable = (props: PgCompanyTableProps) => {
               <PgCompanyRow
                 index={index}
                 onCheck={handleClick}
-                selected={isSelected(pgCompany.id)}
-                key={pgCompany.id}
+                selected={isSelected(pgCompany.pgCompanyId)}
+                key={pgCompany.pgCompanyId}
                 processing={props.processing}
                 pgCompany={pgCompany}
               />

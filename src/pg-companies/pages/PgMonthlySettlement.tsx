@@ -49,23 +49,23 @@ const PgMonthlySettlement: React.FC = () => {
   const { data: monthlySettlements } = useMonthlySettlements(id, month);
 
   const headerCells: headerCellType[] = [
-    { id: 'agency_name', label: '대리점' },
-    { id: 'merchant_name', label: '가맹점' },
+    { id: 'agencyName', label: '대리점' },
+    { id: 'contractMerchantName', label: '가맹점' },
     { id: 'mid', label: 'MID' },
-    { id: 'sme_grade', label: '영중소' },
-    { id: 'total_sales', label: '거래금액' },
-    { id: 'pg_fee_rate', label: 'PG 수수료율', isPercentage: true },
-    { id: 'our_fee_rate', label: 'MK 수수료율', isPercentage: true },
-    { id: 'fee_rate_difference', label: '수수료율 차이', isPercentage: true },
-    { id: 'pg_calculated_fee', label: 'PG 수수료액' },
-    { id: 'our_calculated_fee', label: 'MK 수수료액' },
-    { id: 'fee_amount_difference', label: '수수료액 차이' },
-    // { id: 'pg_surtax', label: 'PG 부가세' },
-    // { id: 'our_surtax', label: 'MK 부가세' },
-    // { id: 'surtax_amount_difference', label: '부가세 차이' },
-    // { id: 'pg_expected_payment', label: 'PG 총액' },
-    // { id: 'our_expected_payment', label: 'MK 총액' },
-    // { id: 'expected_payment_difference', label: '총액 차이' },
+    { id: 'smeGrade', label: '영중소' },
+    { id: 'totalSales', label: '거래금액' },
+    { id: 'pgCommissionRate', label: 'PG 수수료율', isPercentage: true },
+    { id: 'mkCommissionRate', label: 'MK 수수료율', isPercentage: true },
+    { id: 'commissionRateDifference', label: '수수료율 차이', isPercentage: true },
+    { id: 'pgCommissionAmount', label: 'PG 수수료액' },
+    { id: 'mkCommissionAmount', label: 'MK 수수료액' },
+    { id: 'commissionAmountDifference', label: '수수료액 차이' },
+    // { id: 'pgSurtax', label: 'PG 부가세' },
+    // { id: 'mkSurtax', label: 'MK 부가세' },
+    // { id: 'surtaxAmountDifference', label: '부가세 차이' },
+    // { id: 'pgExpectedPayment', label: 'PG 총액' },
+    // { id: 'mkExpectedPayment', label: 'MK 총액' },
+    // { id: 'expectedPaymentDifference', label: '총액 차이' },
   ];
 
   const summary = useMemo(() => {
@@ -78,23 +78,27 @@ const PgMonthlySettlement: React.FC = () => {
       );
 
     return {
-      agency_name: '합계',
-      merchant_name: '',
+      id: '0', // 요약 행의 임의 ID
+      pgCompanyName: '',
+      agencyName: '합계',
+      contractMerchantName: '',
       mid: '',
-      sme_grade: '',
-      total_sales: sum('total_sales'),
-      pg_fee_rate: sum('pg_fee_rate') / count,
-      our_fee_rate: sum('our_fee_rate') / count,
-      fee_rate_difference: sum('fee_rate_difference') / count,
-      pg_calculated_fee: sum('pg_calculated_fee'),
-      our_calculated_fee: sum('our_calculated_fee'),
-      fee_amount_difference: sum('fee_amount_difference'),
-      pg_surtax: sum('pg_surtax'),
-      our_surtax: sum('our_surtax'),
-      surtax_amount_difference: sum('surtax_amount_difference'),
-      pg_expected_payment: sum('pg_expected_payment'),
-      our_expected_payment: sum('our_expected_payment'),
-      expected_payment_difference: sum('expected_payment_difference'),
+      smeGrade: '',
+      totalSales: sum('totalSales'),
+      pgCommissionRate: sum('pgCommissionRate') / count,
+      mkCommissionRate: sum('mkCommissionRate') / count,
+      commissionRateDifference: sum('commissionRateDifference') / count,
+      pgCommissionAmount: sum('pgCommissionAmount'),
+      mkCommissionAmount: sum('mkCommissionAmount'),
+      commissionAmountDifference: sum('commissionAmountDifference'),
+      pgSurtax: sum('pgSurtax'),
+      mkSurtax: sum('mkSurtax'),
+      surtaxAmountDifference: sum('surtaxAmountDifference'),
+      pgExpectedPayment: sum('pgExpectedPayment'),
+      mkExpectedPayment: sum('mkExpectedPayment'),
+      expectedPaymentDifference: sum('expectedPaymentDifference'),
+      createdAt: '',
+      updatedAt: '',
     } as MonthlySettlementType;
   }, [monthlySettlements]);
 
@@ -107,7 +111,9 @@ const PgMonthlySettlement: React.FC = () => {
   return (
     <React.Fragment>
       <AdminAppBar>
-        <AdminToolbar title={`${pgCompany?.name} ${month} 정산 내역`} />
+        <AdminToolbar
+          title={`${pgCompany?.pgCompanyName} ${month} 정산 내역`}
+        />
       </AdminAppBar>
 
       <Box p={2}>
@@ -150,40 +156,40 @@ const PgMonthlySettlement: React.FC = () => {
                     </TableCell>
                   ) : (
                     <React.Fragment>
-                      <TableCell align="center">{row.agency_name}</TableCell>
-                      <TableCell align="center">{row.merchant_name}</TableCell>
+                      <TableCell align="center">{row.agencyName}</TableCell>
+                      <TableCell align="center">{row.contractMerchantName}</TableCell>
                       <TableCell
                         align="center"
                         sx={{
-                          color: getDifferenceColor(row.fee_rate_difference),
+                          color: getDifferenceColor(row.commissionRateDifference),
                         }}
                       >
                         {row.mid}
                       </TableCell>
-                      <TableCell align="center">{row.sme_grade}</TableCell>
+                      <TableCell align="center">{row.smeGrade}</TableCell>
                     </React.Fragment>
                   )}
                   <TableCell align="center">
-                    {row.total_sales.toLocaleString()}
+                    {row.totalSales.toLocaleString()}
                   </TableCell>
                   <TableCell align="center">
-                    {Number(row.pg_fee_rate).toFixed(3)}%
+                    {Number(row.pgCommissionRate).toFixed(3)}%
                   </TableCell>
                   <TableCell align="center">
-                    {Number(row.our_fee_rate).toFixed(3)}%
+                    {Number(row.mkCommissionRate).toFixed(3)}%
                   </TableCell>
                   <StyledDifferenceCell
-                    value={row.fee_rate_difference}
+                    value={row.commissionRateDifference}
                     suffix="%"
                     isPercentage
                   />
                   <TableCell align="center">
-                    {row.pg_calculated_fee?.toLocaleString()}
+                    {row.pgCommissionAmount?.toLocaleString()}
                   </TableCell>
                   <TableCell align="center">
-                    {row.our_calculated_fee?.toLocaleString()}
+                    {row.mkCommissionAmount?.toLocaleString()}
                   </TableCell>
-                  <StyledDifferenceCell value={row.fee_amount_difference} />
+                  <StyledDifferenceCell value={row.commissionAmountDifference} />
                   {/* <TableCell align="center">
                     {row.pg_surtax.toLocaleString()}
                   </TableCell>

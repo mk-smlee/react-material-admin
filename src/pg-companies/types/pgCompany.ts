@@ -1,8 +1,8 @@
 export interface PgCompany {
-  id: string;
-  name: string;
-  is_direct_agency_payout: boolean;
-  monthly_excel_format: MonthlyExcelFormatEnum;
+  pgCompanyId: string;
+  pgCompanyName: string;
+  isDirectAgencyPayout: boolean;
+  monthlyExcelFormat: MonthlyExcelFormatEnum;
 }
 
 export enum MonthlyExcelFormatEnum {

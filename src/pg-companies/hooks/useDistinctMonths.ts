@@ -1,10 +1,10 @@
 import { useQuery } from 'react-query';
-import api from '../../api';
+import { apiService } from '../../api';
 
 const fetchDistinctMonths = async (
   pgCompanyId: string,
 ): Promise<string[]> => {
-  const { data } = await api.get(
+  const data = await apiService.get<string[]>(
     `/raw-settlement-files/distinct-months/${pgCompanyId}`,
   );
   return data;
