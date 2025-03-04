@@ -2,7 +2,7 @@ export interface MerchantDeviceItem {
   merchantId: string;
   merchantName: string;
   mid: string;
-  grade: string;
+  smeGrade: string;
   windowCount: number;
   androidCount: number;
   posCount: number;

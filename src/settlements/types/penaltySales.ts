@@ -3,7 +3,7 @@ export interface MerchantPenaltyItem {
   merchantName: string;
   mid: string;
   pgCompanyName: string;
-  grade: string;
+  smeGrade: string;
   monthlySales: number;
 }
 

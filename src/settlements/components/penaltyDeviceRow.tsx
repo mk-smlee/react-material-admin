@@ -28,7 +28,7 @@ const penaltyDeviceRow = (agency: AgencyDeviceItem) => {
           <>
             <TableCell align="center">{firstMerchant.merchantName}</TableCell>
             <TableCell align="center">{firstMerchant.mid}</TableCell>
-            <TableCell align="center">{firstMerchant.grade}</TableCell>
+            <TableCell align="center">{firstMerchant.smeGrade}</TableCell>
             <TableCell align="center">
               {firstMerchant.windowCount.toLocaleString()}
             </TableCell>
@@ -67,7 +67,7 @@ const penaltyDeviceRow = (agency: AgencyDeviceItem) => {
         <TableRow key={m.merchantId}>
           <TableCell align="center">{m.merchantName}</TableCell>
           <TableCell align="center">{m.mid}</TableCell>
-          <TableCell align="center">{m.grade}</TableCell>
+          <TableCell align="center">{m.smeGrade}</TableCell>
           <TableCell align="center">{m.windowCount.toLocaleString()}</TableCell>
           <TableCell align="center">
             {m.androidCount.toLocaleString()}

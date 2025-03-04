@@ -8,7 +8,7 @@ import { apiService } from '../../api';
  */
 async function fetchPenaltyDevice(yearMonth: string): Promise<AgencyDeviceItem[]> {
   const data = await apiService.get<AgencyDeviceItem[]>(
-    `/monthly-settlements/device-penalty/${yearMonth}`,
+    `/monthly-snapshot-penalty-device/monthly/${yearMonth}`,
   );
   return data;
 }

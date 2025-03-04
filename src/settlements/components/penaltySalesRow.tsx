@@ -41,7 +41,7 @@ const penaltySalesRow = (agency: AgencyPenaltyItem) => {
             <TableCell align="center">{firstMerchant.merchantName}</TableCell>
             <TableCell align="center">{firstMerchant.mid}</TableCell>
             <TableCell align="center">{firstMerchant.pgCompanyName}</TableCell>
-            <TableCell align="center">{firstMerchant.grade}</TableCell>
+            <TableCell align="center">{firstMerchant.smeGrade}</TableCell>
             <TableCell align="right">
               {firstMerchant.monthlySales.toLocaleString()}
             </TableCell>
@@ -64,7 +64,7 @@ const penaltySalesRow = (agency: AgencyPenaltyItem) => {
           <TableCell align="center">{m.merchantName}</TableCell>
           <TableCell align="center">{m.mid}</TableCell>
           <TableCell align="center">{m.pgCompanyName}</TableCell>
-          <TableCell align="center">{m.grade}</TableCell>
+          <TableCell align="center">{m.smeGrade}</TableCell>
           <TableCell align="right">{m.monthlySales.toLocaleString()}</TableCell>
         </TableRow>
       ))}
