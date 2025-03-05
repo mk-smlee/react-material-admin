@@ -59,7 +59,6 @@ api.interceptors.response.use(
     
     // API URL과 메서드 정보 추가
     const requestInfo = `${method} ${url}`;
-    errorMessage = `${errorMessage} (${requestInfo})`;
     
     // 표준화된 에러 객체 생성
     const enhancedError = new Error(errorMessage);
@@ -70,6 +69,7 @@ api.interceptors.response.use(
     (enhancedError as any).isApiError = true;
     (enhancedError as any).url = url;
     (enhancedError as any).method = method;
+    (enhancedError as any).requestInfo = requestInfo;
     
     // 콘솔에 자세한 에러 정보 로깅 (개발 환경에서만)
     if (process.env.NODE_ENV === 'development') {

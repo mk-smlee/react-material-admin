@@ -1,9 +1,16 @@
 import React, { useState, ChangeEvent } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Button, Typography, TextField, Divider } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Typography,
+  TextField,
+  Divider,
+} from '@material-ui/core';
 import AdminAppBar from '../../admin/components/AdminAppBar';
 import AdminToolbar from '../../admin/components/AdminToolbar';
 import { useUploadMonthlySettlement } from '../hooks/useUploadMonthlySettlement';
+import { useDeleteMonthlySettlement } from '../hooks/useDeleteMonthlySettlement';
 import { usePgCompanyById } from '../hooks/usePgCompanyById';
 import {
   IsDirectAgencyPayoutLabels,
@@ -13,6 +20,9 @@ import { convertEnumToLabel } from '../../core/utils/enumUtils';
 import { useDistinctMonths } from '../hooks/useDistinctMonths';
 import DistinctMonthTable from '../components/DistinctMonthTable';
 import Loader from '../../core/components/Loader';
+import { getCurrentMonth } from '../../core/utils/utils';
+import UploadConfirmDialog from '../components/UploadConfirmDialog';
+import DeleteConfirmDialog from '../components/DeleteConfirmDialog';
 
 const PgCompanyDetail: React.FC = () => {
   const { id } = useParams();
@@ -23,11 +33,12 @@ const PgCompanyDetail: React.FC = () => {
     isLoading: distinctMonthsIsLoading,
     refetch: distinctMonthsRefetch,
   } = useDistinctMonths(id);
-  const uploadMutation = useUploadMonthlySettlement(id);
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
-  const [selectedMonth, setSelectedMonth] = useState<string>(
-    new Date().toISOString().slice(0, 7),
-  );
+  const [selectedMonth, setSelectedMonth] = useState<string>(getCurrentMonth());
+  const uploadMutation = useUploadMonthlySettlement(id, selectedMonth);
+  const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [monthToDelete, setMonthToDelete] = useState<string>('');
 
   const isLoading = pgCompanyByIdIsLoading || distinctMonthsIsLoading;
 
@@ -49,14 +60,42 @@ const PgCompanyDetail: React.FC = () => {
     Array.from(selectedFiles).forEach((file) => {
       formData.append('files', file);
     });
-    formData.append('settlementMonth', selectedMonth);
 
     uploadMutation.mutate(formData, {
       onSuccess: () => {
         distinctMonthsRefetch();
         setSelectedFiles(null);
+        setIsConfirmDialogOpen(false);
       },
     });
+  };
+
+  const handleConfirmUpload = () => {
+    setIsConfirmDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsConfirmDialogOpen(false);
+  };
+
+  const deleteMutation = useDeleteMonthlySettlement(id, monthToDelete);
+
+  const handleDeleteClick = (month: string) => {
+    setMonthToDelete(month);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    deleteMutation.mutate(undefined, {
+      onSuccess: () => {
+        distinctMonthsRefetch();
+        setIsDeleteDialogOpen(false);
+      },
+    });
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setIsDeleteDialogOpen(false);
   };
 
   return (
@@ -135,20 +174,57 @@ const PgCompanyDetail: React.FC = () => {
           </label>
 
           {selectedFiles && (
-            <Button variant="contained" color="primary" onClick={handleUpload}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleConfirmUpload}
+            >
               업로드 시작
             </Button>
           )}
         </Box>
       </Box>
 
-      {uploadMutation.isLoading ? (
-        <Loader />
+      <UploadConfirmDialog
+        open={isConfirmDialogOpen}
+        onClose={handleCloseDialog}
+        onConfirm={handleUpload}
+        pgCompanyName={pgCompany?.pgCompanyName}
+        selectedMonth={selectedMonth}
+        selectedFiles={selectedFiles}
+      />
+
+      <DeleteConfirmDialog
+        open={isDeleteDialogOpen}
+        onClose={handleCloseDeleteDialog}
+        onConfirm={handleConfirmDelete}
+        pgCompanyName={pgCompany?.pgCompanyName}
+        monthToDelete={monthToDelete}
+      />
+
+      {uploadMutation.isLoading || deleteMutation.isLoading ? (
+        <Box
+          sx={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            zIndex: 9999,
+          }}
+        >
+          <Loader />
+        </Box>
       ) : (
         <DistinctMonthTable
           isLoading={isLoading}
           pgCompanyId={id}
           distinctMonths={distinctMonths}
+          onDeleteClick={handleDeleteClick}
         />
       )}
     </React.Fragment>

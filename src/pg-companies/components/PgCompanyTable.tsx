@@ -1,10 +1,6 @@
 import {
   Avatar,
   Box,
-  IconButton,
-  ListItemIcon,
-  Menu,
-  MenuItem,
   Table,
   TableBody,
   TableCell,
@@ -14,10 +10,6 @@ import {
   Typography,
 } from '@material-ui/core';
 import { PgCompany } from '../types/pgCompany';
-import { useState } from 'react';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
 import { selectAll, selectOne } from '../../core/utils/selectUtils';
 import { Link } from 'react-router-dom';
 import CreditCard from '@material-ui/icons/CreditCard';
@@ -58,9 +50,9 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             {headCell.label}
           </TableCell>
         ))}
-        <TableCell align="right" sx={{ py: 0 }}>
+        {/* <TableCell align="right" sx={{ py: 0 }}>
           작업
-        </TableCell>
+        </TableCell> */}
       </TableRow>
     </TableHead>
   );
@@ -75,24 +67,24 @@ type PgCompanyRowProps = {
 };
 
 const PgCompanyRow = (props: PgCompanyRowProps) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const openActions = Boolean(anchorEl);
+  // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  // const openActions = Boolean(anchorEl);
 
-  const handleOpenActions = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleOpenActions = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
-  const handleCloseActions = () => {
-    setAnchorEl(null);
-  };
+  // const handleCloseActions = () => {
+  //   setAnchorEl(null);
+  // };
 
-  const handleDelete = () => {
-    handleCloseActions();
-  };
+  // const handleDelete = () => {
+  //   handleCloseActions();
+  // };
 
-  const handleEdit = () => {
-    handleCloseActions();
-  };
+  // const handleEdit = () => {
+  //   handleCloseActions();
+  // };
 
   return (
     <TableRow
@@ -103,7 +95,12 @@ const PgCompanyRow = (props: PgCompanyRowProps) => {
       sx={{ '& td': { bgcolor: 'background.paper', border: 0 } }}
     >
       <TableCell
-        sx={{ borderTopLeftRadius: '1rem', borderBottomLeftRadius: '1rem' }}
+        sx={{
+          borderTopLeftRadius: '1rem',
+          borderBottomLeftRadius: '1rem',
+          borderTopRightRadius: '1rem',
+          borderBottomRightRadius: '1rem',
+        }}
       >
         <Link
           to={`/admin/pg-companies/${props.pgCompany.pgCompanyId}`}
@@ -121,7 +118,7 @@ const PgCompanyRow = (props: PgCompanyRowProps) => {
           </Box>
         </Link>
       </TableCell>
-      <TableCell
+      {/* <TableCell
         align="right"
         sx={{ borderTopRightRadius: '1rem', borderBottomRightRadius: '1rem' }}
       >
@@ -158,7 +155,7 @@ const PgCompanyRow = (props: PgCompanyRowProps) => {
             삭제
           </MenuItem>
         </Menu>
-      </TableCell>
+      </TableCell> */}
     </TableRow>
   );
 };

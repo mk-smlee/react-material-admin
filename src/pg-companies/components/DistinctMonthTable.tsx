@@ -2,9 +2,6 @@ import {
   Avatar,
   Box,
   IconButton,
-  ListItemIcon,
-  Menu,
-  MenuItem,
   Table,
   TableBody,
   TableCell,
@@ -13,10 +10,7 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 
@@ -39,8 +33,8 @@ const EnhancedTableHead = () => {
             {headCell.label}
           </TableCell>
         ))}
-        <TableCell align="right" sx={{ py: 0 }}>
-          작업
+        <TableCell align="right" sx={{ py: 0, pr: '28px' }}>
+          삭제
         </TableCell>
       </TableRow>
     </TableHead>
@@ -52,28 +46,10 @@ type distinctMonthProps = {
   index: number;
   pgCompanyId: string;
   distinctMonth: string;
+  onDeleteClick: (month: string) => void;
 };
 
 const DistinctMonthRow = (props: distinctMonthProps) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const openActions = Boolean(anchorEl);
-
-  const handleOpenActions = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleCloseActions = () => {
-    setAnchorEl(null);
-  };
-
-  const handleDelete = () => {
-    handleCloseActions();
-  };
-
-  const handleEdit = () => {
-    handleCloseActions();
-  };
-
   return (
     <TableRow
       tabIndex={-1}
@@ -81,7 +57,10 @@ const DistinctMonthRow = (props: distinctMonthProps) => {
       sx={{ '& td': { bgcolor: 'background.paper', border: 0 } }}
     >
       <TableCell
-        sx={{ borderTopLeftRadius: '1rem', borderBottomLeftRadius: '1rem' }}
+        sx={{
+          borderTopLeftRadius: '1rem',
+          borderBottomLeftRadius: '1rem',
+        }}
       >
         <Link
           to={`/admin/pg-companies/${props.pgCompanyId}/monthly-settlement/${props.distinctMonth}`}
@@ -101,54 +80,36 @@ const DistinctMonthRow = (props: distinctMonthProps) => {
       </TableCell>
       <TableCell
         align="right"
-        sx={{ borderTopRightRadius: '1rem', borderBottomRightRadius: '1rem' }}
+        sx={{
+          borderTopRightRadius: '1rem',
+          borderBottomRightRadius: '1rem',
+        }}
       >
         <IconButton
-          id="user-row-menu-button"
-          aria-label="사용자 작업"
-          aria-controls="user-row-menu"
-          aria-haspopup="true"
-          aria-expanded={openActions ? 'true' : 'false'}
-          disabled={props.isLoading}
-          onClick={handleOpenActions}
+          aria-label="삭제"
+          onClick={() => props.onDeleteClick(props.distinctMonth)}
         >
-          <MoreVertIcon />
+          <DeleteIcon />
         </IconButton>
-        <Menu
-          id="user-row-menu"
-          anchorEl={anchorEl}
-          aria-labelledby="user-row-menu-button"
-          open={openActions}
-          onClose={handleCloseActions}
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        >
-          <MenuItem onClick={handleEdit}>
-            <ListItemIcon>
-              <EditIcon />
-            </ListItemIcon>{' '}
-            수정
-          </MenuItem>
-          <MenuItem onClick={handleDelete}>
-            <ListItemIcon>
-              <DeleteIcon />
-            </ListItemIcon>{' '}
-            삭제
-          </MenuItem>
-        </Menu>
       </TableCell>
     </TableRow>
   );
 };
 
-interface distinctMonthTableProps {
+interface DistinctMonthTableProps {
   isLoading: boolean;
   pgCompanyId: string;
   distinctMonths?: string[];
+  onDeleteClick: (month: string) => void;
 }
 
-const DistinctMonthTable = (props: distinctMonthTableProps) => {
-  if (!props.distinctMonths || props.distinctMonths.length === 0) {
+const DistinctMonthTable: React.FC<DistinctMonthTableProps> = ({
+  isLoading,
+  pgCompanyId,
+  distinctMonths,
+  onDeleteClick,
+}) => {
+  if (!distinctMonths || distinctMonths.length === 0) {
     return <Typography variant="body1">정산 내역이 없습니다.</Typography>;
   }
 
@@ -164,13 +125,14 @@ const DistinctMonthTable = (props: distinctMonthTableProps) => {
       >
         <EnhancedTableHead />
         <TableBody>
-          {props.distinctMonths?.map((distinctMonth, index) => (
+          {distinctMonths?.map((distinctMonth, index) => (
             <DistinctMonthRow
               key={index}
               index={index}
-              isLoading={props.isLoading}
-              pgCompanyId={props.pgCompanyId}
+              isLoading={isLoading}
+              pgCompanyId={pgCompanyId}
               distinctMonth={distinctMonth}
+              onDeleteClick={onDeleteClick}
             />
           ))}
         </TableBody>

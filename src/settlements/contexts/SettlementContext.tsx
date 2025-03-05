@@ -1,5 +1,5 @@
 import React, { createContext, useState, ReactNode, useContext } from 'react';
-
+import { getCurrentMonth } from '../../core/utils/utils';
 export interface SettlementContextType {
   selectedMonth: string;
   setSelectedMonth: (month: string) => void;
@@ -14,9 +14,7 @@ interface SettlementProviderProps {
 export const SettlementProvider: React.FC<SettlementProviderProps> = ({
   children,
 }) => {
-  const [selectedMonth, setSelectedMonth] = useState(
-    new Date().toISOString().slice(0, 7),
-  );
+  const [selectedMonth, setSelectedMonth] = useState(getCurrentMonth());
 
   return (
     <SettlementContext.Provider value={{ selectedMonth, setSelectedMonth }}>
