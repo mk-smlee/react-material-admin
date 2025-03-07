@@ -28,20 +28,33 @@ const PgMonthlySettlement = lazy(
 
 // Settlements
 const Settlements = lazy(() => import('./settlements/pages/Settlements'));
-const AgencyCommission = lazy(() => import('./settlements/pages/AgencyCommission'));
+const AgencyCommission = lazy(
+  () => import('./settlements/pages/AgencyCommission'),
+);
 const PenaltySales = lazy(() => import('./settlements/pages/PenaltySales'));
 const PenaltyDevice = lazy(() => import('./settlements/pages/PenaltyDevice'));
+
+// Contracts
+const Contracts = lazy(() => import('./contracts/pages/Contracts'));
+const ContractDetail = lazy(() => import('./contracts/pages/ContractDetail'));
+const ContractCreatePage = lazy(() => import('./contracts/pages/ContractCreatePage'));
+const ContractEditPage = lazy(() => import('./contracts/pages/ContractEditPage'));
 
 // Users
 const UserManagement = lazy(() => import('./users/pages/UserManagement'));
 
-const RedirectToAdmin = () => {
+const AppRoutes = () => {
   const { userInfo } = useAuth();
   const isAuthenticated = Boolean(userInfo);
-  return isAuthenticated ? <Navigate to="/admin" replace /> : <Login />;
-};
 
-const AppRoutes = () => {
+  const RedirectToAdmin = () => {
+    return isAuthenticated ? (
+      <Navigate to="/admin" replace />
+    ) : (
+      <Navigate to="/login" replace />
+    );
+  };
+
   return (
     <Routes>
       <Route path="/" element={<RedirectToAdmin />} />
@@ -58,6 +71,17 @@ const AppRoutes = () => {
           <PrivateRoute path="/penalty/sales" element={<PenaltySales />} />
           <PrivateRoute path="/penalty/device" element={<PenaltyDevice />} />
         </PrivateRoute>
+        <PrivateRoute path="contracts" element={<Contracts />} />
+        <PrivateRoute path="contracts/:id" element={<ContractDetail />} />
+        <PrivateRoute
+          path="contracts/create"
+          element={<ContractCreatePage />}
+        />
+        <PrivateRoute
+          path="contracts/:id/edit"
+          element={<ContractEditPage />}
+        />
+  
         <PrivateRoute path="profile" element={<Profile />}>
           <PrivateRoute path="/" element={<ProfileInformation />} />
         </PrivateRoute>

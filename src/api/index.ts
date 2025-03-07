@@ -1,4 +1,9 @@
-import axios, { AxiosInstance, AxiosError, AxiosResponse, AxiosRequestConfig } from 'axios';
+import axios, {
+  AxiosInstance,
+  AxiosError,
+  AxiosResponse,
+  AxiosRequestConfig,
+} from 'axios';
 
 // API 응답 인터페이스 정의
 export interface ApiResponse<T> {
@@ -35,34 +40,46 @@ api.interceptors.response.use(
     // 요청 정보 추출
     const url = error.config?.url || '알 수 없는 URL';
     const method = error.config?.method?.toUpperCase() || 'UNKNOWN';
-    
+
     let errorMessage = '알 수 없는 오류가 발생했습니다.';
     let statusCode = 500;
     let errorDetails: string[] = [];
-    
+
     // 서버에서 받은 에러 정보가 있는 경우
     if (error.response) {
       const errorPayload = error.response.data;
-      errorMessage = errorPayload?.message || `서버 에러 (${error.response.status})`;
+      // 422 에러인 경우, message가 배열이면 문자열로 변환
+      if (
+        error.response.status === 422 &&
+        Array.isArray(errorPayload?.message)
+      ) {
+        errorMessage =
+          '요청값 오류 :: ' +
+          errorPayload.message
+            .map((item: any) => `${item.property}: ${item.error}`)
+            .join(', ');
+      } else {
+        errorMessage =
+          errorPayload?.message || `서버 에러 (${error.response.status})`;
+      }
       statusCode = errorPayload?.statusCode || error.response.status;
       errorDetails = errorPayload?.errors || [];
-    } 
+    }
     // 요청이 서버에 도달했으나 응답 형식이 잘못된 경우
     else if (error.request) {
-      errorMessage = '서버 응답을 받지 못했습니다. 네트워크 연결을 확인해주세요.';
+      errorMessage =
+        '서버 응답을 받지 못했습니다. 네트워크 연결을 확인해주세요.';
       statusCode = 0;
-    } 
-    // 요청 설정 중 에러가 발생한 경우
-    else {
+    } else {
       errorMessage = `요청 설정 중 오류: ${error.message}`;
     }
-    
+
     // API URL과 메서드 정보 추가
     const requestInfo = `${method} ${url}`;
-    
+
     // 표준화된 에러 객체 생성
     const enhancedError = new Error(errorMessage);
-    
+
     // 추가 정보 저장
     (enhancedError as any).statusCode = statusCode;
     (enhancedError as any).errors = errorDetails;
@@ -70,19 +87,19 @@ api.interceptors.response.use(
     (enhancedError as any).url = url;
     (enhancedError as any).method = method;
     (enhancedError as any).requestInfo = requestInfo;
-    
+
     // 콘솔에 자세한 에러 정보 로깅 (개발 환경에서만)
     if (process.env.NODE_ENV === 'development') {
-      console.error(`API 에러 (${requestInfo}):`, { 
-        statusCode, 
-        message: errorMessage, 
+      console.error(`API 에러 (${requestInfo}):`, {
+        statusCode,
+        message: errorMessage,
         details: errorDetails,
-        originalError: error
+        originalError: error,
       });
     }
-    
+
     return Promise.reject(enhancedError);
-  }
+  },
 );
 
 // 타입 안전성을 위한 요청 헬퍼 함수들
@@ -95,16 +112,20 @@ export const apiService = {
   get: async <T>(url: string, params?: any): Promise<T> => {
     return api.get<ApiResponse<T>, T>(url, { params });
   },
-  
+
   /**
    * POST 요청을 수행합니다.
    * @param url 요청 URL
    * @param data 요청 바디
    */
-  post: async <T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> => {
+  post: async <T>(
+    url: string,
+    data?: any,
+    config?: AxiosRequestConfig,
+  ): Promise<T> => {
     return api.post<ApiResponse<T>, T>(url, data, config);
   },
-  
+
   /**
    * PUT 요청을 수행합니다.
    * @param url 요청 URL
@@ -113,7 +134,7 @@ export const apiService = {
   put: async <T>(url: string, data?: any): Promise<T> => {
     return api.put<ApiResponse<T>, T>(url, data);
   },
-  
+
   /**
    * PATCH 요청을 수행합니다.
    * @param url 요청 URL
@@ -122,7 +143,7 @@ export const apiService = {
   patch: async <T>(url: string, data?: any): Promise<T> => {
     return api.patch<ApiResponse<T>, T>(url, data);
   },
-  
+
   /**
    * DELETE 요청을 수행합니다.
    * @param url 요청 URL
@@ -130,7 +151,7 @@ export const apiService = {
   delete: async <T>(url: string): Promise<T> => {
     return api.delete<ApiResponse<T>, T>(url);
   },
-  
+
   /**
    * API 에러인지 확인합니다.
    * @param error 확인할 에러 객체
