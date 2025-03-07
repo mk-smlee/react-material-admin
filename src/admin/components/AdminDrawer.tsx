@@ -16,7 +16,8 @@ import { useAuth } from '../../auth/contexts/AuthProvider';
 import Logo from '../../core/components/Logo';
 import { drawerCollapsedWidth, drawerWidth } from '../../core/config/layout';
 import AssignmentIcon from '@material-ui/icons/AssignmentOutlined';
-import StorefrontIcon from '@material-ui/icons/Storefront';
+import StorefrontIcon from '@material-ui/icons/StorefrontOutlined';
+import BusinessIcon from '@material-ui/icons/BusinessOutlined';
 
 export const menuItems = [
   {
@@ -25,9 +26,9 @@ export const menuItems = [
     path: '/admin/pg-companies',
   },
   {
-    icon: AccountBalanceWalletIcon,
-    label: '정산 관리',
-    path: '/admin/settlements',
+    icon: BusinessIcon,
+    label: '대리점 관리',
+    path: '/admin/agencies',
   },
   {
     icon: StorefrontIcon,
@@ -38,6 +39,11 @@ export const menuItems = [
     icon: AssignmentIcon,
     label: '계약 관리',
     path: '/admin/contracts',
+  },
+  {
+    icon: AccountBalanceWalletIcon,
+    label: '정산 관리',
+    path: '/admin/settlements',
   },
 ];
 

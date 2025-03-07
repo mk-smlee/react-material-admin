@@ -54,6 +54,14 @@ const MerchantEditPage = lazy(
   () => import('./merchants/pages/MerchantEditPage'),
 );
 
+// Agencies
+const Agencies = lazy(() => import('./agencies/pages/Agencies'));
+const AgencyDetail = lazy(() => import('./agencies/pages/AgencyDetail'));
+const AgencyCreatePage = lazy(
+  () => import('./agencies/pages/AgencyCreatePage'),
+);
+const AgencyEditPage = lazy(() => import('./agencies/pages/AgencyEditPage'));
+
 // Users
 const UserManagement = lazy(() => import('./users/pages/UserManagement'));
 
@@ -85,6 +93,7 @@ const AppRoutes = () => {
           <PrivateRoute path="/penalty/sales" element={<PenaltySales />} />
           <PrivateRoute path="/penalty/device" element={<PenaltyDevice />} />
         </PrivateRoute>
+
         <PrivateRoute path="contracts" element={<Contracts />} />
         <PrivateRoute path="contracts/:id" element={<ContractDetail />} />
         <PrivateRoute
@@ -95,6 +104,7 @@ const AppRoutes = () => {
           path="contracts/:id/edit"
           element={<ContractEditPage />}
         />
+
         <PrivateRoute path="merchants" element={<Merchants />} />
         <PrivateRoute
           path="merchants/create"
@@ -105,6 +115,11 @@ const AppRoutes = () => {
           path="merchants/:id/edit"
           element={<MerchantEditPage />}
         />
+
+        <PrivateRoute path="agencies" element={<Agencies />} />
+        <PrivateRoute path="agencies/:id" element={<AgencyDetail />} />
+        <PrivateRoute path="agencies/create" element={<AgencyCreatePage />} />
+        <PrivateRoute path="agencies/:id/edit" element={<AgencyEditPage />} />
 
         <PrivateRoute path="profile" element={<Profile />}>
           <PrivateRoute path="/" element={<ProfileInformation />} />

@@ -10,12 +10,12 @@ import {
 import { Autocomplete } from '@material-ui/core';
 
 import { PgCompany } from '../../pg-companies/types/pgCompany';
-import { Agency } from '../../agencies/types/agencies';
+import { AgencyDropdownItem } from '../../agencies/types/agency';
 import { MerchantsForDropdownItem } from '../../merchants/types/merchant';
 import { useSnackbar } from '../../core/contexts/SnackbarProvider';
 
 import { usePgCompanies } from '../../pg-companies/hooks/usePgCompanies';
-import { useAgencies } from '../../agencies/hooks/useAgencies';
+import { useAgenciesForDropdown } from '../../agencies/hooks/useAgenciesForDropdown';
 import { useMerchantsForDropdown } from '../../merchants/hooks/useMerchantsForDropdown';
 import PercentageTextField from '../../core/components/PercentageTextField';
 import { CONTRACT_FIELD_LABELS } from '../types/contract';
@@ -66,7 +66,7 @@ const ContractForm: React.FC<ContractFormProps> = ({
 
   // 1) Autocomplete 목록 API
   const { data: pgCompanies } = usePgCompanies();
-  const { data: agencies } = useAgencies();
+  const { data: agencies } = useAgenciesForDropdown();
   const { data: merchants } = useMerchantsForDropdown();
 
   // 2) 폼 state
@@ -231,7 +231,7 @@ const ContractForm: React.FC<ContractFormProps> = ({
               autoHighlight
               freeSolo={false}
               options={agencies || []}
-              getOptionLabel={(option: Agency) => option.agencyName}
+              getOptionLabel={(option: AgencyDropdownItem) => option.agencyName}
               value={selectedAgency}
               onChange={(_, newValue) => {
                 setAgencyId(newValue?.agencyId ?? '');

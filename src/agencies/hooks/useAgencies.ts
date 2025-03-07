@@ -1,9 +1,9 @@
-import { apiService } from "../../api";
-import { useQuery } from "react-query";
-import { Agency } from "../types/agencies";
+import { useQuery } from 'react-query';
+import { AgencyListItem } from '../types/agency';
+import { apiService } from '../../api';
 
-async function fetchAgencies(): Promise<Agency[]> {
-  return apiService.get<Agency[]>('/agencies');
+async function fetchAgencies(): Promise<AgencyListItem[]> {
+  return apiService.get<AgencyListItem[]>('/agencies'); 
 }
 
 export function useAgencies() {
