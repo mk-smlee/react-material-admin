@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import { ContractListItem } from '../types/contract';
+import { ContractListItem, CONTRACT_FIELD_LABELS } from '../types/contract';
 
 interface HeadCell {
   id: keyof ContractListItem;
@@ -20,12 +20,12 @@ interface HeadCell {
 }
 
 const headCells: HeadCell[] = [
-  { id: 'pgCompanyName', label: 'PG사 이름', align: 'left' },
-  { id: 'agencyName', label: '대리점 이름', align: 'left' },
-  { id: 'merchantName', label: '가맹점 이름', align: 'left' },
-  { id: 'businessNumber', label: '사업자번호', align: 'left' },
-  { id: 'contractMerchantName', label: '계약 가맹점 상호', align: 'left' },
-  { id: 'mid', label: 'MID', align: 'left' },
+  { id: 'pgCompanyName', label: CONTRACT_FIELD_LABELS.pgCompanyName, align: 'left' },
+  { id: 'agencyName', label: CONTRACT_FIELD_LABELS.agencyName, align: 'left' },
+  { id: 'merchantName', label: CONTRACT_FIELD_LABELS.merchantName, align: 'left' },
+  { id: 'businessNumber', label: CONTRACT_FIELD_LABELS.businessNumber, align: 'left' },
+  { id: 'contractMerchantName', label: CONTRACT_FIELD_LABELS.contractMerchantName, align: 'left' },
+  { id: 'mid', label: CONTRACT_FIELD_LABELS.mid, align: 'left' },
 ];
 
 function EnhancedTableHead() {

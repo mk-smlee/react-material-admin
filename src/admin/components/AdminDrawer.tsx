@@ -16,6 +16,7 @@ import { useAuth } from '../../auth/contexts/AuthProvider';
 import Logo from '../../core/components/Logo';
 import { drawerCollapsedWidth, drawerWidth } from '../../core/config/layout';
 import AssignmentIcon from '@material-ui/icons/AssignmentOutlined';
+import StorefrontIcon from '@material-ui/icons/Storefront';
 
 export const menuItems = [
   {
@@ -27,6 +28,11 @@ export const menuItems = [
     icon: AccountBalanceWalletIcon,
     label: '정산 관리',
     path: '/admin/settlements',
+  },
+  {
+    icon: StorefrontIcon,
+    label: '가맹점 관리',
+    path: '/admin/merchants',
   },
   {
     icon: AssignmentIcon,

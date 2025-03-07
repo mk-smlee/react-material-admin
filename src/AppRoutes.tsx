@@ -37,8 +37,22 @@ const PenaltyDevice = lazy(() => import('./settlements/pages/PenaltyDevice'));
 // Contracts
 const Contracts = lazy(() => import('./contracts/pages/Contracts'));
 const ContractDetail = lazy(() => import('./contracts/pages/ContractDetail'));
-const ContractCreatePage = lazy(() => import('./contracts/pages/ContractCreatePage'));
-const ContractEditPage = lazy(() => import('./contracts/pages/ContractEditPage'));
+const ContractCreatePage = lazy(
+  () => import('./contracts/pages/ContractCreatePage'),
+);
+const ContractEditPage = lazy(
+  () => import('./contracts/pages/ContractEditPage'),
+);
+
+// Merchants
+const Merchants = lazy(() => import('./merchants/pages/Merchants'));
+const MerchantDetail = lazy(() => import('./merchants/pages/MerchantDetail'));
+const MerchantCreatePage = lazy(
+  () => import('./merchants/pages/MerchantCreatePage'),
+);
+const MerchantEditPage = lazy(
+  () => import('./merchants/pages/MerchantEditPage'),
+);
 
 // Users
 const UserManagement = lazy(() => import('./users/pages/UserManagement'));
@@ -81,7 +95,17 @@ const AppRoutes = () => {
           path="contracts/:id/edit"
           element={<ContractEditPage />}
         />
-  
+        <PrivateRoute path="merchants" element={<Merchants />} />
+        <PrivateRoute
+          path="merchants/create"
+          element={<MerchantCreatePage />}
+        />
+        <PrivateRoute path="merchants/:id" element={<MerchantDetail />} />
+        <PrivateRoute
+          path="merchants/:id/edit"
+          element={<MerchantEditPage />}
+        />
+
         <PrivateRoute path="profile" element={<Profile />}>
           <PrivateRoute path="/" element={<ProfileInformation />} />
         </PrivateRoute>

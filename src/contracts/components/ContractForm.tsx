@@ -11,14 +11,14 @@ import { Autocomplete } from '@material-ui/core';
 
 import { PgCompany } from '../../pg-companies/types/pgCompany';
 import { Agency } from '../../agencies/types/agencies';
-import { Merchant } from '../../merchants/types/merchants';
+import { MerchantsForDropdownItem } from '../../merchants/types/merchant';
 import { useSnackbar } from '../../core/contexts/SnackbarProvider';
 
 import { usePgCompanies } from '../../pg-companies/hooks/usePgCompanies';
 import { useAgencies } from '../../agencies/hooks/useAgencies';
-import { useMerchants } from '../../merchants/hooks/useMerchants';
-import PercentageTextField from './PercentageTextField';
-
+import { useMerchantsForDropdown } from '../../merchants/hooks/useMerchantsForDropdown';
+import PercentageTextField from '../../core/components/PercentageTextField';
+import { CONTRACT_FIELD_LABELS } from '../types/contract';
 export interface ContractFormValues {
   // 생성/수정 공통
   pgCompanyId: string;
@@ -55,9 +55,6 @@ export interface ContractFormProps {
  * 하나의 폼을 생성/수정 양쪽에서 재사용
  * - create : PG사/대리점/가맹점/사업자번호/MID 등 모두 수정 가능
  * - edit   : PG사/대리점/가맹점/사업자번호/MID는 읽기 전용 텍스트로 표시
- *
- * 상세 페이지 UI처럼 2열 그리드를 사용하고,
- * 구분할 필요가 있는 지점에서 <Divider>로 구획을 나눠 좀 더 시원하게 배치
  */
 const ContractForm: React.FC<ContractFormProps> = ({
   mode,
@@ -70,7 +67,7 @@ const ContractForm: React.FC<ContractFormProps> = ({
   // 1) Autocomplete 목록 API
   const { data: pgCompanies } = usePgCompanies();
   const { data: agencies } = useAgencies();
-  const { data: merchants } = useMerchants();
+  const { data: merchants } = useMerchantsForDropdown();
 
   // 2) 폼 state
   const [pgCompanyId, setPgCompanyId] = useState(
@@ -180,7 +177,7 @@ const ContractForm: React.FC<ContractFormProps> = ({
       <Box display="grid" gridTemplateColumns="1fr 1fr" gap={2} sx={{ mt: 1 }}>
         <Box>
           <Typography variant="h6" sx={{ mb: 1 }}>
-            PG사
+            {CONTRACT_FIELD_LABELS.pgCompanyName}
           </Typography>
           {mode === 'edit' ? (
             <TextField
@@ -219,7 +216,7 @@ const ContractForm: React.FC<ContractFormProps> = ({
 
         <Box>
           <Typography variant="h6" sx={{ mb: 1 }}>
-            대리점
+            {CONTRACT_FIELD_LABELS.agencyName}
           </Typography>
           {mode === 'edit' ? (
             <TextField
@@ -258,7 +255,7 @@ const ContractForm: React.FC<ContractFormProps> = ({
 
         <Box>
           <Typography variant="h6" sx={{ mb: 1 }}>
-            가맹점
+            {CONTRACT_FIELD_LABELS.merchantName}
           </Typography>
           {mode === 'edit' ? (
             <TextField
@@ -273,7 +270,9 @@ const ContractForm: React.FC<ContractFormProps> = ({
               autoHighlight
               freeSolo={false}
               options={merchants || []}
-              getOptionLabel={(option: Merchant) => option.merchantName}
+              getOptionLabel={(option: MerchantsForDropdownItem) =>
+                option.merchantName
+              }
               value={selectedMerchant}
               onChange={(_, newValue) => {
                 setMerchantId(newValue?.merchantId ?? '');
@@ -297,7 +296,7 @@ const ContractForm: React.FC<ContractFormProps> = ({
 
         <Box>
           <Typography variant="h6" sx={{ mb: 1 }}>
-            사업자번호
+            {CONTRACT_FIELD_LABELS.businessNumber}
           </Typography>
           <TextField
             variant="outlined"
@@ -311,7 +310,7 @@ const ContractForm: React.FC<ContractFormProps> = ({
 
         <Box>
           <Typography variant="h6" sx={{ mb: 1 }}>
-            계약 가맹점 상호
+            {CONTRACT_FIELD_LABELS.contractMerchantName}
           </Typography>
           <TextField
             variant="outlined"
@@ -323,7 +322,7 @@ const ContractForm: React.FC<ContractFormProps> = ({
 
         <Box>
           <Typography variant="h6" sx={{ mb: 1 }}>
-            MID
+            {CONTRACT_FIELD_LABELS.mid}
           </Typography>
           {mode === 'edit' ? (
             <TextField variant="outlined" value={mid} disabled fullWidth />
@@ -339,7 +338,7 @@ const ContractForm: React.FC<ContractFormProps> = ({
 
         <Box>
           <Typography variant="h6" sx={{ mb: 1 }}>
-            계약일
+            {CONTRACT_FIELD_LABELS.contractDate}
           </Typography>
           <TextField
             variant="outlined"
@@ -353,7 +352,7 @@ const ContractForm: React.FC<ContractFormProps> = ({
 
         <Box>
           <Typography variant="h6" sx={{ mb: 1 }}>
-            영중소 등급
+            {CONTRACT_FIELD_LABELS.smeGrade}
           </Typography>
           <TextField
             variant="outlined"
@@ -365,7 +364,7 @@ const ContractForm: React.FC<ContractFormProps> = ({
 
         <Box>
           <Typography variant="h6" sx={{ mb: 1 }}>
-            계약 유형
+            {CONTRACT_FIELD_LABELS.contractType}
           </Typography>
           <TextField
             variant="outlined"
@@ -377,7 +376,7 @@ const ContractForm: React.FC<ContractFormProps> = ({
 
         <Box>
           <Typography variant="h6" sx={{ mb: 1 }}>
-            특이사항
+            {CONTRACT_FIELD_LABELS.specialNote}
           </Typography>
           <TextField
             variant="outlined"
@@ -393,7 +392,7 @@ const ContractForm: React.FC<ContractFormProps> = ({
 
         <Box>
           <Typography variant="h6" sx={{ mb: 1 }}>
-            판매 수수료율(%)
+            {CONTRACT_FIELD_LABELS.salesCommissionRate}
           </Typography>
           <PercentageTextField
             label=""
@@ -405,7 +404,7 @@ const ContractForm: React.FC<ContractFormProps> = ({
 
         <Box>
           <Typography variant="h6" sx={{ mb: 1 }}>
-            PG 원가(%)
+            {CONTRACT_FIELD_LABELS.pgCommissionRate}
           </Typography>
           <PercentageTextField
             label=""
@@ -417,7 +416,7 @@ const ContractForm: React.FC<ContractFormProps> = ({
 
         <Box>
           <Typography variant="h6" sx={{ mb: 1 }}>
-            대리점 수수료(%)
+            {CONTRACT_FIELD_LABELS.agencyCommissionRate}
           </Typography>
           <PercentageTextField
             label=""
@@ -429,7 +428,7 @@ const ContractForm: React.FC<ContractFormProps> = ({
 
         <Box>
           <Typography variant="h6" sx={{ mb: 1 }}>
-            PG 제외 정산값(%)
+            {CONTRACT_FIELD_LABELS.excludePgCommissionRate}
           </Typography>
           <PercentageTextField
             label=""
