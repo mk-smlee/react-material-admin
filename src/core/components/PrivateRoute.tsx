@@ -1,18 +1,21 @@
-import { Navigate, Route, RouteProps } from "react-router";
-import { useAuth } from "../../auth/contexts/AuthProvider";
+import { Navigate, Route, RouteProps } from 'react-router';
+import { useAuth } from '../../auth/contexts/AuthContext';
 
 type PrivateRouteProps = {
-  roles?: string[];
+  requiredRole?: number;
 } & RouteProps;
 
 const PrivateRoute = ({
   children,
-  roles,
+  requiredRole,
   ...routeProps
 }: PrivateRouteProps) => {
-  const { userInfo } = useAuth();
+  const { user } = useAuth();
 
-  if (userInfo) {
+  if (user) {
+    if (requiredRole && user.role !== requiredRole) {
+      return <Navigate to={`/403`} />;
+    }
     return <Route {...routeProps} />;
   } else {
     return <Navigate to={`/login`} />;

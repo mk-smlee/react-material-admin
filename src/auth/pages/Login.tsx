@@ -1,43 +1,48 @@
+import React from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LoadingButton from '@material-ui/lab/LoadingButton';
-import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
-import * as Yup from 'yup';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useSnackbar } from '../../core/contexts/SnackbarProvider';
-import { useAuth } from '../contexts/AuthProvider';
 import { Container } from '@material-ui/core';
 import Logo from '../../core/components/Logo';
+import { useLogin } from '../hooks/useLogin';
+import { useAuth } from '../contexts/AuthContext';
 
 const Login = () => {
-  const { isLoggingIn, login } = useAuth();
   const navigate = useNavigate();
+  const { mutate: loginMutate, isLoading } = useLogin();
   const snackbar = useSnackbar();
 
-  const handleLogin = (email: string, password: string) => {
-    login(email, password)
-      .then(() => navigate(`/admin`, { replace: true }))
-      .catch(() => snackbar.error('예상치 못한 오류가 발생했습니다.'));
-  };
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const { user } = useAuth();
 
-  const formik = useFormik({
-    initialValues: {
-      email: 'demo@example.com',
-      password: "guWEK<'r/-47-XG3",
-    },
-    validationSchema: Yup.object({
-      email: Yup.string()
-        .email('유효한 이메일 주소를 입력하세요.')
-        .required('이메일을 입력하세요.'),
-      password: Yup.string()
-        .min(8, '최소 8자 이상 입력해야 합니다.')
-        .required('비밀번호를 입력하세요.'),
-    }),
-    onSubmit: (values) => handleLogin(values.email, values.password),
-  });
+  if (user) {
+    return <Navigate to="/admin" replace />;
+  }
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!email.trim() || !password.trim()) {
+      return snackbar.error('이메일과 비밀번호를 입력해주세요.');
+    }
+
+    loginMutate(
+      { email, password },
+      {
+        onSuccess: () => {
+          navigate('/admin', { replace: true });
+        },
+        onError: () => {
+          snackbar.error('로그인에 실패했습니다. 다시 시도해주세요.');
+        },
+      },
+    );
+  };
 
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>
@@ -67,11 +72,12 @@ const Login = () => {
             <Typography component="h1" variant="h5">
               로그인
             </Typography>
+            {/* form 태그로 감싸고 onSubmit 핸들러 등록 */}
             <Box
               component="form"
               marginTop={3}
               noValidate
-              onSubmit={formik.handleSubmit}
+              onSubmit={handleSubmit}
             >
               <TextField
                 margin="normal"
@@ -83,11 +89,9 @@ const Login = () => {
                 name="email"
                 autoComplete="email"
                 autoFocus
-                disabled={isLoggingIn}
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
+                placeholder="abc@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -99,20 +103,16 @@ const Login = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                disabled={isLoggingIn}
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.password && Boolean(formik.errors.password)
-                }
-                helperText={formik.touched.password && formik.errors.password}
+                placeholder="********"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <LoadingButton
                 type="submit"
                 fullWidth
-                loading={isLoggingIn}
                 variant="contained"
                 sx={{ mt: 3 }}
+                loading={isLoading}
               >
                 로그인
               </LoadingButton>

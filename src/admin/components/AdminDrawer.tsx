@@ -9,17 +9,25 @@ import ListItemText from '@material-ui/core/ListItemText';
 import CreditCard from '@material-ui/icons/CreditCard';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
 import PersonIcon from '@material-ui/icons/Person';
+import PersonOutlinedIcon from '@material-ui/icons/PersonOutlined';
 import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosNew from '@material-ui/icons/ArrowBackIosNew';
 import { NavLink, useLocation } from 'react-router-dom';
-import { useAuth } from '../../auth/contexts/AuthProvider';
 import Logo from '../../core/components/Logo';
 import { drawerCollapsedWidth, drawerWidth } from '../../core/config/layout';
 import AssignmentIcon from '@material-ui/icons/AssignmentOutlined';
 import StorefrontIcon from '@material-ui/icons/StorefrontOutlined';
 import BusinessIcon from '@material-ui/icons/BusinessOutlined';
+import { useAuth } from '../../auth/contexts/AuthContext';
 
-export const menuItems = [
+interface MenuItem {
+  icon: React.ElementType;
+  label: string;
+  path: string;
+  role?: number;
+}
+
+export const menuItems: MenuItem[] = [
   {
     icon: CreditCard,
     label: 'PG사 관리',
@@ -45,6 +53,12 @@ export const menuItems = [
     label: '정산 관리',
     path: '/admin/settlements',
   },
+  {
+    icon: PersonOutlinedIcon,
+    label: '사용자 관리',
+    path: '/admin/users',
+    role: 1,
+  },
 ];
 
 type AdminDrawerProps = {
@@ -60,13 +74,16 @@ const AdminDrawer = ({
   mobileOpen,
   onDrawerToggle,
 }: AdminDrawerProps) => {
-  const { userInfo } = useAuth();
+  const { user } = useAuth();
   const { pathname } = useLocation();
   const width = collapsed ? drawerCollapsedWidth : drawerWidth;
 
   const renderMenuItem = (item: (typeof menuItems)[number]) => {
     const isActive = pathname.startsWith(item.path);
     const Icon = item.icon;
+    if (item.role && item.role !== user?.role) {
+      return null;
+    }
     return (
       <ListItem
         button
@@ -106,9 +123,9 @@ const AdminDrawer = ({
               <PersonIcon />
             </Avatar>
           </ListItemAvatar>
-          {userInfo && (
+          {user && (
             <ListItemText
-              primary={`${userInfo.firstName} ${userInfo.lastName}`}
+              primary={`${user?.name}`}
               sx={{
                 display: collapsed ? 'none' : 'block',
               }}

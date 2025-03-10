@@ -2,7 +2,7 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import AppRoutes from './AppRoutes';
-import AuthProvider from './auth/contexts/AuthProvider';
+import { AuthProvider } from './auth/contexts/AuthContext';
 import Loader from './core/components/Loader';
 import QueryWrapper from './core/components/QueryWrapper';
 import SettingsProvider from './core/contexts/SettingsProvider';
@@ -22,6 +22,7 @@ const queryClient = new QueryClient({
     },
   },
 });
+
 function ErrorHandler() {
   const { showError } = useErrorModal();
 

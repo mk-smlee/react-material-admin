@@ -153,6 +153,18 @@ export const apiService = {
   },
 
   /**
+   * Axios 기본 헤더에 Authorization을 세팅하거나 제거합니다.
+   * @param token
+   */
+  setAuthToken: (token?: string) => {
+    if (token) {
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else {
+      delete api.defaults.headers.common['Authorization'];
+    }
+  },
+
+  /**
    * API 에러인지 확인합니다.
    * @param error 확인할 에러 객체
    */

@@ -1,14 +1,13 @@
-import { lazy } from 'react';
+import { lazy, useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import PrivateRoute from './core/components/PrivateRoute';
-import { useAuth } from './auth/contexts/AuthProvider';
-
+import { useAuth } from './auth/contexts/AuthContext';
+import { apiService } from './api';
+import { AuthUser } from './auth/types/auth';
+import Loader from './core/components/Loader';
 // Admin
 const Admin = lazy(() => import('./admin/pages/Admin'));
-const Profile = lazy(() => import('./admin/pages/Profile'));
-const ProfileInformation = lazy(
-  () => import('./admin/pages/ProfileInformation'),
-);
+const ProfileDetail = lazy(() => import('./admin/pages/ProfileDetail'));
 
 // Auth
 const Login = lazy(() => import('./auth/pages/Login'));
@@ -63,11 +62,44 @@ const AgencyCreatePage = lazy(
 const AgencyEditPage = lazy(() => import('./agencies/pages/AgencyEditPage'));
 
 // Users
-const UserManagement = lazy(() => import('./users/pages/UserManagement'));
+const UserManagement = lazy(() => import('./settlement-users/pages/Users'));
+const UserDetail = lazy(
+  () => import('./settlement-users/pages/UserDetailPage'),
+);
+const UserCreatePage = lazy(
+  () => import('./settlement-users/pages/UserCreatePage'),
+);
+const UserEditPage = lazy(
+  () => import('./settlement-users/pages/UserEditPage'),
+);
 
 const AppRoutes = () => {
-  const { userInfo } = useAuth();
-  const isAuthenticated = Boolean(userInfo);
+  const { user, setAuthData, authInitialized } = useAuth();
+
+  useEffect(() => {
+    if (!authInitialized) {
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        apiService.setAuthToken(token);
+        apiService.get<AuthUser>('/settlement-users/me').then(
+          (userInfo) => {
+            setAuthData(token, userInfo);
+          },
+          () => {
+            setAuthData(); // 실패 시 토큰 제거
+          },
+        );
+      } else {
+        setAuthData();
+      }
+    }
+  }, [authInitialized, setAuthData]);
+
+  if (!authInitialized) {
+    return <Loader />;
+  }
+
+  const isAuthenticated = Boolean(user);
 
   const RedirectToAdmin = () => {
     return isAuthenticated ? (
@@ -82,6 +114,9 @@ const AppRoutes = () => {
       <Route path="/" element={<RedirectToAdmin />} />
       <PrivateRoute path="admin" element={<Admin />}>
         <PrivateRoute path="/" element={<PgCompanies />} />
+
+        <PrivateRoute path="profile" element={<ProfileDetail />} />
+
         <PrivateRoute path="pg-companies" element={<PgCompanies />} />
         <PrivateRoute path="pg-companies/:id" element={<PgCompaniesDetail />} />
         <PrivateRoute
@@ -121,10 +156,26 @@ const AppRoutes = () => {
         <PrivateRoute path="agencies/create" element={<AgencyCreatePage />} />
         <PrivateRoute path="agencies/:id/edit" element={<AgencyEditPage />} />
 
-        <PrivateRoute path="profile" element={<Profile />}>
-          <PrivateRoute path="/" element={<ProfileInformation />} />
-        </PrivateRoute>
-        <PrivateRoute path="user-management" element={<UserManagement />} />
+        <PrivateRoute
+          path="users"
+          element={<UserManagement />}
+          requiredRole={1}
+        />
+        <PrivateRoute
+          path="users/:id"
+          element={<UserDetail />}
+          requiredRole={1}
+        />
+        <PrivateRoute
+          path="users/create"
+          element={<UserCreatePage />}
+          requiredRole={1}
+        />
+        <PrivateRoute
+          path="users/:id/edit"
+          element={<UserEditPage />}
+          requiredRole={1}
+        />
       </PrivateRoute>
       <Route path="login" element={<Login />} />
       <Route path="403" element={<Forbidden />} />
