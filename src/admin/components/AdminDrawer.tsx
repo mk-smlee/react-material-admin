@@ -20,7 +20,7 @@ import StorefrontIcon from '@material-ui/icons/StorefrontOutlined';
 import BusinessIcon from '@material-ui/icons/BusinessOutlined';
 import { useAuth } from '../../auth/contexts/AuthContext';
 import MoneyOffOutlined from '@material-ui/icons/MoneyOffOutlined';
-
+import DevicesOutlined from '@material-ui/icons/DevicesOutlined';
 interface MenuItem {
   icon: React.ElementType;
   label: string;
@@ -53,6 +53,11 @@ export const menuItems: MenuItem[] = [
     icon: MoneyOffOutlined,
     label: '매출 약정 관리',
     path: '/admin/penalty-sales',
+  },
+  {
+    icon: DevicesOutlined,
+    label: '기기 약정 관리',
+    path: '/admin/penalty-device',
   },
   {
     icon: AccountBalanceWalletIcon,

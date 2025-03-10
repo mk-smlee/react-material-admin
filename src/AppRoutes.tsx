@@ -65,6 +65,19 @@ const PenaltySalesEditPage = lazy(
   () => import('./penalty-sales/pages/PenaltySalesEditPage'),
 );
 
+// Penalty Device
+const PenaltyDevice = lazy(
+  () => import('./penalty-device/pages/PenaltyDevice'),
+);
+const PenaltyDeviceDetail = lazy(
+  () => import('./penalty-device/pages/PenaltyDeviceDetail'),
+);
+const PenaltyDeviceCreatePage = lazy(
+  () => import('./penalty-device/pages/PenaltyDeviceCreatePage'),
+);
+const PenaltyDeviceEditPage = lazy(
+  () => import('./penalty-device/pages/PenaltyDeviceEditPage'),
+);
 // Settlements
 const Settlements = lazy(() => import('./settlements/pages/Settlements'));
 const AgencyCommission = lazy(
@@ -179,6 +192,20 @@ const AppRoutes = () => {
         <PrivateRoute
           path="penalty-sales/:id/edit"
           element={<PenaltySalesEditPage />}
+        />
+
+        <PrivateRoute path="penalty-device" element={<PenaltyDevice />} />
+        <PrivateRoute
+          path="penalty-device/:id"
+          element={<PenaltyDeviceDetail />}
+        />
+        <PrivateRoute
+          path="penalty-device/create"
+          element={<PenaltyDeviceCreatePage />}
+        />
+        <PrivateRoute
+          path="penalty-device/:id/edit"
+          element={<PenaltyDeviceEditPage />}
         />
 
         <PrivateRoute path="settlements" element={<Settlements />}>

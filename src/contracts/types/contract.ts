@@ -1,4 +1,13 @@
 /**
+ * /contracts/dropdown - 드롭다운 조회 시
+ */
+export interface ContractDropdownItem {
+  contractId: string;
+  mid: string;
+  contractMerchantName: string;
+}
+
+/**
  * /contracts - 목록 조회 시
  */
 export interface ContractListItem {

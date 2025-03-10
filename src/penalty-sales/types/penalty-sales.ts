@@ -24,7 +24,7 @@ export interface UpdatePenaltySalesPayload {
 }
 
 export const PENALTY_SALES_FIELD_LABELS: Record<string, string> = {
-  agencyName: '대리점',
+  agencyName: '대리점명',
   monthlyCommittedSales: '월 약정 매출',
   monthlyPenaltyRate: '월 패널티 율',
   remarks: '비고',

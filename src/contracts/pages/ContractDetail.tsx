@@ -149,8 +149,9 @@ const ContractDetail: React.FC = () => {
               {CONTRACT_FIELD_LABELS.salesCommissionRate}
             </Typography>
             <Typography variant="body1" color="textSecondary">
-              {contract.salesCommissionRate !== undefined
-                ? `${contract.salesCommissionRate.toFixed(2)}%`
+              {contract.salesCommissionRate !== undefined &&
+              contract.salesCommissionRate !== null
+                ? `${contract.salesCommissionRate?.toFixed(2)}%`
                 : '-'}
             </Typography>
           </Box>
@@ -159,8 +160,9 @@ const ContractDetail: React.FC = () => {
               {CONTRACT_FIELD_LABELS.pgCommissionRate}
             </Typography>
             <Typography variant="body1" color="textSecondary">
-              {contract.pgCommissionRate !== undefined
-                ? `${contract.pgCommissionRate.toFixed(2)}%`
+              {contract.pgCommissionRate !== undefined &&
+              contract.pgCommissionRate !== null
+                ? `${contract.pgCommissionRate?.toFixed(2)}%`
                 : '-'}
             </Typography>
           </Box>
@@ -169,8 +171,9 @@ const ContractDetail: React.FC = () => {
               {CONTRACT_FIELD_LABELS.agencyCommissionRate}
             </Typography>
             <Typography variant="body1" color="textSecondary">
-              {contract.agencyCommissionRate !== undefined
-                ? `${contract.agencyCommissionRate.toFixed(2)}%`
+              {contract.agencyCommissionRate !== undefined &&
+              contract.agencyCommissionRate !== null
+                ? `${contract.agencyCommissionRate?.toFixed(2)}%`
                 : '-'}
             </Typography>
           </Box>
@@ -179,8 +182,9 @@ const ContractDetail: React.FC = () => {
               {CONTRACT_FIELD_LABELS.excludePgCommissionRate}
             </Typography>
             <Typography variant="body1" color="textSecondary">
-              {contract.excludePgCommissionRate !== undefined
-                ? `${contract.excludePgCommissionRate.toFixed(2)}%`
+              {contract.excludePgCommissionRate !== undefined &&
+              contract.excludePgCommissionRate !== null
+                ? `${contract.excludePgCommissionRate?.toFixed(2)}%`
                 : '-'}
             </Typography>
           </Box>
