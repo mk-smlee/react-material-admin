@@ -45,8 +45,8 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             inputProps={{ 'aria-label': '모든 사용자 선택' }}
           />
         </TableCell> */}
-        {headCells.map((headCell) => (
-          <TableCell key={headCell.id} align={headCell.align} sx={{ py: 0 }}>
+        {headCells.map((headCell, index) => (
+          <TableCell key={headCell.id} align={headCell.align} sx={{ py: 0, pl: index === 0 ? '32px' : '' }}>
             {headCell.label}
           </TableCell>
         ))}

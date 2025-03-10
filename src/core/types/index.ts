@@ -9,7 +9,7 @@ export type headerCellType = {
 
 export interface auditLog {
   auditLogId: string;
-  entityName: string; // 'contracts'
+  entityName: string;
   entityId: string; // 계약ID
   fieldName: string; // 변경된 필드 이름
   oldValue: string;

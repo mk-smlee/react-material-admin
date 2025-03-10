@@ -25,23 +25,13 @@ const PgMonthlySettlement = lazy(
   () => import('./pg-companies/pages/PgMonthlySettlement'),
 );
 
-// Settlements
-const Settlements = lazy(() => import('./settlements/pages/Settlements'));
-const AgencyCommission = lazy(
-  () => import('./settlements/pages/AgencyCommission'),
+// Agencies
+const Agencies = lazy(() => import('./agencies/pages/Agencies'));
+const AgencyDetail = lazy(() => import('./agencies/pages/AgencyDetail'));
+const AgencyCreatePage = lazy(
+  () => import('./agencies/pages/AgencyCreatePage'),
 );
-const PenaltySales = lazy(() => import('./settlements/pages/PenaltySales'));
-const PenaltyDevice = lazy(() => import('./settlements/pages/PenaltyDevice'));
-
-// Contracts
-const Contracts = lazy(() => import('./contracts/pages/Contracts'));
-const ContractDetail = lazy(() => import('./contracts/pages/ContractDetail'));
-const ContractCreatePage = lazy(
-  () => import('./contracts/pages/ContractCreatePage'),
-);
-const ContractEditPage = lazy(
-  () => import('./contracts/pages/ContractEditPage'),
-);
+const AgencyEditPage = lazy(() => import('./agencies/pages/AgencyEditPage'));
 
 // Merchants
 const Merchants = lazy(() => import('./merchants/pages/Merchants'));
@@ -53,13 +43,39 @@ const MerchantEditPage = lazy(
   () => import('./merchants/pages/MerchantEditPage'),
 );
 
-// Agencies
-const Agencies = lazy(() => import('./agencies/pages/Agencies'));
-const AgencyDetail = lazy(() => import('./agencies/pages/AgencyDetail'));
-const AgencyCreatePage = lazy(
-  () => import('./agencies/pages/AgencyCreatePage'),
+// Contracts
+const Contracts = lazy(() => import('./contracts/pages/Contracts'));
+const ContractDetail = lazy(() => import('./contracts/pages/ContractDetail'));
+const ContractCreatePage = lazy(
+  () => import('./contracts/pages/ContractCreatePage'),
 );
-const AgencyEditPage = lazy(() => import('./agencies/pages/AgencyEditPage'));
+const ContractEditPage = lazy(
+  () => import('./contracts/pages/ContractEditPage'),
+);
+
+// Penalty Sales
+const PenaltySales = lazy(() => import('./penalty-sales/pages/PenaltySales'));
+const PenaltySalesDetail = lazy(
+  () => import('./penalty-sales/pages/PenaltySalesDetail'),
+);
+const PenaltySalesCreatePage = lazy(
+  () => import('./penalty-sales/pages/PenaltySalesCreatePage'),
+);
+const PenaltySalesEditPage = lazy(
+  () => import('./penalty-sales/pages/PenaltySalesEditPage'),
+);
+
+// Settlements
+const Settlements = lazy(() => import('./settlements/pages/Settlements'));
+const AgencyCommission = lazy(
+  () => import('./settlements/pages/AgencyCommission'),
+);
+const SettlementPenaltySales = lazy(
+  () => import('./settlements/pages/PenaltySales'),
+);
+const SettlementPenaltyDevice = lazy(
+  () => import('./settlements/pages/PenaltyDevice'),
+);
 
 // Users
 const UserManagement = lazy(() => import('./settlement-users/pages/Users'));
@@ -123,22 +139,11 @@ const AppRoutes = () => {
           path="pg-companies/:id/monthly-settlement/:month"
           element={<PgMonthlySettlement />}
         />
-        <PrivateRoute path="settlements" element={<Settlements />}>
-          <PrivateRoute path="/" element={<AgencyCommission />} />
-          <PrivateRoute path="/penalty/sales" element={<PenaltySales />} />
-          <PrivateRoute path="/penalty/device" element={<PenaltyDevice />} />
-        </PrivateRoute>
 
-        <PrivateRoute path="contracts" element={<Contracts />} />
-        <PrivateRoute path="contracts/:id" element={<ContractDetail />} />
-        <PrivateRoute
-          path="contracts/create"
-          element={<ContractCreatePage />}
-        />
-        <PrivateRoute
-          path="contracts/:id/edit"
-          element={<ContractEditPage />}
-        />
+        <PrivateRoute path="agencies" element={<Agencies />} />
+        <PrivateRoute path="agencies/:id" element={<AgencyDetail />} />
+        <PrivateRoute path="agencies/create" element={<AgencyCreatePage />} />
+        <PrivateRoute path="agencies/:id/edit" element={<AgencyEditPage />} />
 
         <PrivateRoute path="merchants" element={<Merchants />} />
         <PrivateRoute
@@ -151,10 +156,42 @@ const AppRoutes = () => {
           element={<MerchantEditPage />}
         />
 
-        <PrivateRoute path="agencies" element={<Agencies />} />
-        <PrivateRoute path="agencies/:id" element={<AgencyDetail />} />
-        <PrivateRoute path="agencies/create" element={<AgencyCreatePage />} />
-        <PrivateRoute path="agencies/:id/edit" element={<AgencyEditPage />} />
+        <PrivateRoute path="contracts" element={<Contracts />} />
+        <PrivateRoute path="contracts/:id" element={<ContractDetail />} />
+        <PrivateRoute
+          path="contracts/create"
+          element={<ContractCreatePage />}
+        />
+        <PrivateRoute
+          path="contracts/:id/edit"
+          element={<ContractEditPage />}
+        />
+
+        <PrivateRoute path="penalty-sales" element={<PenaltySales />} />
+        <PrivateRoute
+          path="penalty-sales/:id"
+          element={<PenaltySalesDetail />}
+        />
+        <PrivateRoute
+          path="penalty-sales/create"
+          element={<PenaltySalesCreatePage />}
+        />
+        <PrivateRoute
+          path="penalty-sales/:id/edit"
+          element={<PenaltySalesEditPage />}
+        />
+
+        <PrivateRoute path="settlements" element={<Settlements />}>
+          <PrivateRoute path="/" element={<AgencyCommission />} />
+          <PrivateRoute
+            path="/penalty/sales"
+            element={<SettlementPenaltySales />}
+          />
+          <PrivateRoute
+            path="/penalty/device"
+            element={<SettlementPenaltyDevice />}
+          />
+        </PrivateRoute>
 
         <PrivateRoute
           path="users"
