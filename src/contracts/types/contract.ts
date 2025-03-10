@@ -68,17 +68,6 @@ export interface UpdateContractPayload {
   excludePgCommissionRate?: number;
 }
 
-export interface ContractAuditLog {
-  auditLogId: string;
-  entityName: string; // 'contracts'
-  entityId: string; // 계약ID
-  fieldName: string; // 변경된 필드 이름
-  oldValue: string;
-  newValue: string;
-  changedBy: string; // 수정자 (ex: userId / userName)
-  changedAt: string; // 수정 일시
-}
-
 /**
  * 필드 라벨 매핑
  */

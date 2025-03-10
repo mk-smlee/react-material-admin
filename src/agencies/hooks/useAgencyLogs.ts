@@ -1,9 +1,9 @@
 import { useQuery } from 'react-query';
 import { apiService } from '../../api';
-import { ContractAuditLog } from '../../contracts/types/contract'; // 이미 AuditLog가 공통으로 있으므로 재사용
+import { auditLog } from '../../core/types';
 
-async function fetchAgencyLogs(agencyId: string): Promise<ContractAuditLog[]> {
-  return apiService.get<ContractAuditLog[]>(`/agencies/${agencyId}/logs`);
+async function fetchAgencyLogs(agencyId: string): Promise<auditLog[]> {
+  return apiService.get<auditLog[]>(`/agencies/${agencyId}/logs`);
 }
 
 export function useAgencyLogs(agencyId?: string) {

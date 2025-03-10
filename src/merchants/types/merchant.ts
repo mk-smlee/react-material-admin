@@ -53,20 +53,6 @@ export interface UpdateMerchantPayload {
 }
 
 /**
- * AuditLogs (이력조회)
- */
-export interface MerchantAuditLog {
-  auditLogId: string;
-  entityName: 'merchants';
-  entityId: string; // merchantId
-  fieldName: string;
-  oldValue: string;
-  newValue: string;
-  changedBy: string;
-  changedAt: string;
-}
-
-/**
  * 필드 라벨 매핑
  * key: 실제 fieldName
  * value: UI로 보여줄 label

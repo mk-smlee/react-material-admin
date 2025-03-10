@@ -1,11 +1,9 @@
 import { useQuery } from 'react-query';
 import { apiService } from '../../api';
-import { ContractAuditLog } from '../types/contract';
+import { auditLog } from '../../core/types';
 
-async function fetchContractLogs(
-  contractId: string,
-): Promise<ContractAuditLog[]> {
-  return apiService.get<ContractAuditLog[]>(`/contracts/${contractId}/logs`);
+async function fetchContractLogs(contractId: string): Promise<auditLog[]> {
+  return apiService.get<auditLog[]>(`/contracts/${contractId}/logs`);
 }
 
 export function useContractLogs(contractId?: string) {

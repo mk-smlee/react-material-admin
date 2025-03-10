@@ -1,11 +1,9 @@
 import { useQuery } from 'react-query';
 import { apiService } from '../../api';
-import { MerchantAuditLog } from '../types/merchant';
+import { auditLog } from '../../core/types';
 
-async function fetchMerchantLogs(
-  merchantId: string,
-): Promise<MerchantAuditLog[]> {
-  return apiService.get<MerchantAuditLog[]>(`/merchants/${merchantId}/logs`);
+async function fetchMerchantLogs(merchantId: string): Promise<auditLog[]> {
+  return apiService.get<auditLog[]>(`/merchants/${merchantId}/logs`);
 }
 
 export function useMerchantLogs(merchantId?: string) {

@@ -85,7 +85,7 @@ const AgencyDetail: React.FC = () => {
                     <TableCell>{label}</TableCell>
                     <TableCell>{log.oldValue}</TableCell>
                     <TableCell>{log.newValue}</TableCell>
-                    <TableCell>{log.changedBy}</TableCell>
+                    <TableCell>{log.changedByUser.name}</TableCell>
                     <TableCell>
                       {new Date(log.changedAt).toLocaleString('ko-KR')}
                     </TableCell>
